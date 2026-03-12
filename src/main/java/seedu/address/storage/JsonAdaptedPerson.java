@@ -37,8 +37,8 @@ class JsonAdaptedPerson {
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("department") String department, @JsonProperty("position") String position,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("email") String email, @JsonProperty("department") String department,
+            @JsonProperty("position") String position, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -99,7 +99,8 @@ class JsonAdaptedPerson {
         final Email modelEmail = new Email(email);
 
         if (department == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Department.class.getSimpleName()));
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Department.class.getSimpleName()));
         }
         if (!Department.isValidDepartment(department)) {
             throw new IllegalValueException(Department.MESSAGE_CONSTRAINTS);
@@ -107,7 +108,8 @@ class JsonAdaptedPerson {
         final Department modelDepartment = new Department(department);
 
         if (position == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Position.class.getSimpleName()));
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Position.class.getSimpleName()));
         }
         if (!Position.isValidPosition(position)) {
             throw new IllegalValueException(Position.MESSAGE_CONSTRAINTS);

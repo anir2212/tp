@@ -1,7 +1,5 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEPARTMENT_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEPARTMENT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
@@ -10,6 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
@@ -38,7 +38,8 @@ public class TypicalPersons {
     public static final Employee CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withDepartment("Finance").withPosition("Advisor").build();
     public static final Employee DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withDepartment("Finance").withPosition("Intern").withTags("friends").build();
+            .withEmail("cornelia@example.com").withDepartment("Finance").withPosition("Intern")
+            .withTags("friends").build();
     public static final Employee ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withDepartment("Finance").withPosition("Supervisor").build();
     public static final Employee FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")

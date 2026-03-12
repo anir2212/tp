@@ -51,7 +51,9 @@ public class Employee {
         return email;
     }
 
-    public Department getDepartment() { return department; }
+    public Department getDepartment() {
+        return department;
+    }
 
     public Position getPosition() {
         return position;
@@ -66,7 +68,7 @@ public class Employee {
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Returns true if both employees have the same name.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Employee otherPerson) {
@@ -79,7 +81,7 @@ public class Employee {
     }
 
     /**
-     * Returns true if both persons have the same identity and data fields.
+     * Returns true if both employees have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
     @Override

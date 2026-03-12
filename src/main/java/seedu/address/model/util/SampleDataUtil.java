@@ -20,23 +20,23 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Employee[] getSamplePersons() {
         return new Employee[] {
-            new Employee(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"), new Department("IT"),
-                new Position("Junior software developer"),
+            new Employee(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
+                new Department("IT"), new Position("Junior software developer"),
                 getTagSet("friends")),
-            new Employee(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"), new Department("Sales"),
-                new Position("HR manager"),
+            new Employee(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
+                new Department("Sales"), new Position("HR manager"),
                 getTagSet("colleagues", "friends")),
-            new Employee(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"), new Department("HR"),
-                new Position("Team leader"),
+            new Employee(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
+                new Department("HR"), new Position("Team leader"),
                 getTagSet("neighbours")),
-            new Employee(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"), new Department("Marketing"),
-                new Position("Marketing lead"),
+            new Employee(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
+                new Department("Marketing"), new Position("Marketing lead"),
                 getTagSet("family")),
-            new Employee(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"), new Department("Finance"),
-                new Position("Frontend developer"),
+            new Employee(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
+                new Department("Finance"), new Position("Frontend developer"),
                 getTagSet("classmates")),
-            new Employee(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"), new Department("Creative"),
-                new Position("Product manager"),
+            new Employee(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
+                new Department("Creative"), new Position("Product manager"),
                 getTagSet("colleagues"))
         };
     }
