@@ -27,5 +27,5 @@ public class ShowCommand extends Command {
 }
 
 /*
-to test if workflow is correcrt
+to test if workflow is correct
  */
