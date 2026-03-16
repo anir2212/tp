@@ -8,9 +8,9 @@
         "about-us": "About Us",
         "project-team": "Project team",
         "shanice-lai": "Shanice Lai",
-        "jane-doe": "Jane Doe",
-        "johnny-doe": "Johnny Doe",
-        "jean-doe": "Jean Doe",
+        "jai": "Jai",
+        "lingjing-teng": "Lingjing Teng",
+        "lin-muxi": "Lin Muxi",
         "anirudh": "Anirudh"
       },
       "headingKeywords": {}
@@ -40,7 +40,7 @@
       "src": "DeveloperGuide.md",
       "title": "Developer Guide",
       "headings": {
-        "ab-3-developer-guide": "AB-3 Developer Guide",
+        "manageup-developer-guide": "ManageUp Developer Guide",
         "acknowledgements": "Acknowledgements",
         "setting-up-getting-started": "Setting up, getting started",
         "design": "Design",
@@ -58,6 +58,8 @@
         "product-scope": "Product scope",
         "user-stories": "User stories",
         "use-cases": "Use cases",
+        "use-case-assign-a-task-to-an-employee": "Use case: Assign a task to an employee",
+        "use-case-search-for-employees-by-department": "Use case: Search for employees by department",
         "non-functional-requirements": "Non-Functional Requirements",
         "glossary": "Glossary",
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
