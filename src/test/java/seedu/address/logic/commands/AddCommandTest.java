@@ -92,7 +92,6 @@ public class AddCommandTest {
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
         }
-
         @Override
         public ReadOnlyUserPrefs getUserPrefs() {
             throw new AssertionError("This method should not be called.");
@@ -234,5 +233,38 @@ public class AddCommandTest {
                     .findFirst().orElse(null);
         }
     }
+
+    @Test
+    public void execute_duplicatePhone_throwsCommandException() {
+        Employee validPerson = new PersonBuilder().build();
+        Employee personWithSamePhone = new PersonBuilder()
+                .withName("Different Name")
+                .withEmail("different@email.com")
+                .build();
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        modelStub.personsAdded.add(validPerson);
+
+        AddCommand addCommand = new AddCommand(personWithSamePhone);
+        assertThrows(CommandException.class,
+                String.format(AddCommand.MESSAGE_DUPLICATE_PHONE,
+                              Messages.format(validPerson)), () -> addCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_duplicateEmail_throwsCommandException() {
+        Employee validPerson = new PersonBuilder().build();
+        Employee personWithSameEmail = new PersonBuilder()
+                .withName("Different Name")
+                .withPhone("99999999")
+                .build();
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        modelStub.personsAdded.add(validPerson);
+
+        AddCommand addCommand = new AddCommand(personWithSameEmail);
+        assertThrows(CommandException.class,
+                String.format(AddCommand.MESSAGE_DUPLICATE_EMAIL,
+                              Messages.format(validPerson)), () -> addCommand.execute(modelStub));
+    }
+
 
 }
