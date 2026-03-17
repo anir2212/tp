@@ -23,23 +23,26 @@ public class AddTaskCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
 
     private final Task task;
-    private final Person person;
+    private final String personName;
 
 
-    /**
-     * Creates an AddTaskCommand to add the specified {@code Task}
-     */
-    public AddTaskCommand(Task task, Person person) {
+
+    public AddTaskCommand(Task task, String personName) {
         requireNonNull(task);
-        requireNonNull(person);
+        requireNonNull(personName);
         this.task = task;
-        this.person = person;
+        this.personName = personName;
+
+
+
+
     }
 
     @Override
     public CommandResult execute(Model model) {
 
         requireNonNull(model);
+        Person person = getPerson(personName, model);
         if (model.hasPerson(person)) {
             model.addTaskToPerson(person, task);
             return new CommandResult(String.format(MESSAGE_SUCCESS, task));
@@ -48,5 +51,14 @@ public class AddTaskCommand extends Command {
         }
 
 
+    }
+
+    public Person getPerson(String personName, Model model) {
+        for (Person p : model.getAddressBook().getPersonList()) {
+            if (p.getName().toString().equals(personName)) {
+                return p;
+            }
+        }
+        return null;
     }
 }

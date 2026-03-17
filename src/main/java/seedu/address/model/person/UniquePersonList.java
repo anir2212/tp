@@ -24,7 +24,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class UniquePersonList implements Iterable<Person> {
 
-    private static final ObservableList<Person> internalList = FXCollections.observableArrayList();
+    private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     private final ObservableList<Person> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
 
@@ -162,9 +162,4 @@ public class UniquePersonList implements Iterable<Person> {
         setPerson(personToEdit, editedPerson);
     }
 
-    public static List<Person> findPersonsByName(String name) {
-        return internalList.stream()
-                .filter(p -> p.getName().fullName.equals(name))
-                .toList();
-    }
 }

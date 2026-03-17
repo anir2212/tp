@@ -12,6 +12,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Task;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.TaskListStorage;
 
@@ -21,25 +22,31 @@ import seedu.address.storage.TaskListStorage;
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
 
+        Task a = new Task("Task 1", "2024-06-30");
+        Task b = new Task("Task 2", "2024-07-01");
+        TaskListStorage taskList = new TaskListStorage(new ArrayList<>());
+        taskList.addTask(a);
+        taskList.addTask(b);
+
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                 new Address("Blk 30 Geylang Street 29, #06-40"),
-                getTagSet("friends"), new TaskListStorage(new ArrayList<>())),
+                getTagSet("friends"), taskList),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                getTagSet("colleagues", "friends"), new TaskListStorage(new ArrayList<>())),
+                getTagSet("colleagues", "friends"), taskList),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                 new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                getTagSet("neighbours"), new TaskListStorage(new ArrayList<>())),
+                getTagSet("neighbours"), taskList),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                 new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                getTagSet("family"), new TaskListStorage(new ArrayList<>())),
+                getTagSet("family"), taskList),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                 new Address("Blk 47 Tampines Street 20, #17-35"),
-                getTagSet("classmates"), new TaskListStorage(new ArrayList<>())),
+                getTagSet("classmates"), taskList),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"),
-                getTagSet("colleagues"), new TaskListStorage(new ArrayList<>()))
+                getTagSet("colleagues"), taskList)
         };
     }
 

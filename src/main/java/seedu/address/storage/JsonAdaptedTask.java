@@ -9,13 +9,8 @@ class JsonAdaptedTask {
         private String taskName;
         private String taskDescription;
 
-        /**
-        * Constructs a {@code JsonAdaptedTask} with the given {@code taskName} and {@code taskDescription}.
-        */
-        public JsonAdaptedTask(String taskName, String taskDescription) {
-            this.taskName = taskName;
-            this.taskDescription = taskDescription;
-        }
+
+
 
         /**
         * Converts a given {@code Task} into this class for Jackson use.

@@ -34,14 +34,14 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
         String taskDescription = argMultimap.getValue(PREFIX_TASK_DESCRIPTION).get();
         String personName = argMultimap.getValue(PREFIX_NAME).get();
 
-        List<Person> personList = UniquePersonList.findPersonsByName(personName);
 
-        Person person = personList.get(0);
         // To be fixed later when we have multiple people with the same name, we can prompt the user to select
         // the correct person from the list of people with the same name.
         // For now, we will just take the first person in the list.
 
-        return new AddTaskCommand(new Task(taskName, taskDescription), person);
+
+        
+        return new AddTaskCommand(new Task(taskName, taskDescription), personName);
     }
 
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
