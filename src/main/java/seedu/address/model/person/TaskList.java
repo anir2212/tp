@@ -20,4 +20,5 @@ public class TaskList {
     public void removeCompletedTasks() {
         internalList.removeIf(Task::isCompleted);
     }
+
 }
