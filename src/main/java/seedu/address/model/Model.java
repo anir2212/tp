@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.employee.Employee;
+import seedu.address.model.person.Task;
 
 /**
  * The API of the Model component.
@@ -104,4 +105,10 @@ public interface Model {
      * Marks a task as completed.
      */
     void markTask(int index);
+
+    /**
+     * Adds a task to the task list.
+     * @param task
+     */
+    void addTask(Task task);
 }

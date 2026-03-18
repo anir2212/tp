@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.employee.Employee;
 import seedu.address.model.employee.UniquePersonList;
+import seedu.address.model.person.Task;
 import seedu.address.model.person.TaskList;
 
 /**
@@ -111,6 +112,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void markTask(int index) {
         requireNonNull(tasks);
         tasks.markTask(index);
+    }
+
+    /**
+     * Adds a task to the task list.
+     */
+    public void addTask(Task task) {
+        tasks.addTask(task);
     }
 
     //// util methods
