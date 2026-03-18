@@ -16,6 +16,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.employee.Employee;
+import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -50,6 +51,23 @@ public class DeleteCommandTest {
     }
 
     @Test
+    public void execute_duplicateNameUnfilteredList_throwsCommandException() {
+        Model duplicateModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        String duplicateName = "Same Name";
+        Employee firstDuplicate = new PersonBuilder().withName(duplicateName)
+                .withPhone("11111111").withEmail("same1@example.com").build();
+        Employee secondDuplicate = new PersonBuilder().withName(duplicateName)
+                .withPhone("22222222").withEmail("same2@example.com").build();
+        duplicateModel.addPerson(firstDuplicate);
+        duplicateModel.addPerson(secondDuplicate);
+
+        DeleteCommand deleteCommand = new DeleteCommand(duplicateName);
+
+        assertCommandFailure(deleteCommand, duplicateModel,
+                String.format(DeleteCommand.MESSAGE_DUPLICATE_EMPLOYEE_NAME, duplicateName));
+    }
+
+    @Test
     public void execute_validNameFilteredList_success() {
         Employee personToDelete = model.getFilteredPersonList().get(0);
         showPersonByName(model, personToDelete.getName().fullName);
@@ -65,6 +83,24 @@ public class DeleteCommandTest {
         showNoPerson(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_duplicateNameFilteredList_throwsCommandException() {
+        Model duplicateModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        String duplicateName = "Same Name";
+        Employee firstDuplicate = new PersonBuilder().withName(duplicateName)
+                .withPhone("11111111").withEmail("same1@example.com").build();
+        Employee secondDuplicate = new PersonBuilder().withName(duplicateName)
+                .withPhone("22222222").withEmail("same2@example.com").build();
+        duplicateModel.addPerson(firstDuplicate);
+        duplicateModel.addPerson(secondDuplicate);
+        duplicateModel.updateFilteredPersonList(employee -> employee.getName().fullName.equals(duplicateName));
+
+        DeleteCommand deleteCommand = new DeleteCommand(duplicateName);
+
+        assertCommandFailure(deleteCommand, duplicateModel,
+                String.format(DeleteCommand.MESSAGE_DUPLICATE_EMPLOYEE_NAME, duplicateName));
     }
 
     @Test

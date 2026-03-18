@@ -25,6 +25,8 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_DELETE_EMPLOYEE_SUCCESS = "Deleted Employee: %1$s";
     public static final String MESSAGE_INVALID_NAME = "Name must contain only alphabets and optional '/'.";
     public static final String MESSAGE_EMPLOYEE_NOT_FOUND = "Employee with name '%1$s' does not exist.";
+    public static final String MESSAGE_DUPLICATE_EMPLOYEE_NAME =
+            "Multiple employees named '%1$s' found. Please use the index instead.";
     public static final String MESSAGE_INVALID_INDEX = "The employee index provided is invalid.";
 
     private final Integer targetIndex; // null if not used
@@ -70,6 +72,7 @@ public class DeleteCommand extends Command {
             // Name-based deletion
             requireNonNull(targetName);
             String normalizedTarget = normalizeName(targetName);
+            int matchCount = 0;
             if (!isValidName(normalizedTarget)) {
                 throw new CommandException(MESSAGE_INVALID_NAME);
             }
@@ -77,12 +80,16 @@ public class DeleteCommand extends Command {
                 String employeeName = normalizeName(employee.getName().fullName);
                 if (employeeName.equals(normalizedTarget)) {
                     personToDelete = employee;
-                    break;
+                    matchCount++;
                 }
             }
-            if (personToDelete == null) {
+            if (matchCount == 0) {
                 throw new CommandException(
                         String.format(MESSAGE_EMPLOYEE_NOT_FOUND, targetName));
+            }
+            if (matchCount > 1) {
+                throw new CommandException(
+                        String.format(MESSAGE_DUPLICATE_EMPLOYEE_NAME, targetName));
             }
         }
 
