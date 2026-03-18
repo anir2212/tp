@@ -19,26 +19,48 @@ public class Task {
         this.isCompleted = false;
     }
 
+    /**
+     * Returns the name of the task.
+     *
+     * @return The task name.
+     */
     public String getTaskName() {
         return taskName;
     }
 
+    /**
+     * Returns the description of the task.
+     *
+     * @return The task description.
+     */
     public String getTaskDescription() {
         return taskDescription;
     }
 
+    /**
+     * Returns true if the task is completed.
+     *
+     * @return True if completed, false otherwise.
+     */
     public boolean isCompleted() {
         return isCompleted;
     }
 
+    /**
+     * Marks the task as completed.
+     */
     public void markAsCompleted() {
         isCompleted = true;
     }
 
+    /**
+     * Returns the string representation of the task.
+     *
+     * @return A string in the format "taskName: taskDescription".
+     */
     @Override
     public String toString() {
         return taskName + ": " + taskDescription;
     }
-
 
 }
