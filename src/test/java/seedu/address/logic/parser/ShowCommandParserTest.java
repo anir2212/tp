@@ -34,4 +34,64 @@ public class ShowCommandParserTest {
         ShowCommand command = parser.parse("Alice");
         assertNotNull(command);
     }
+
+    @Test
+    public void parse_onlySpacesAfterPrefix_returnsCommand() throws Exception {
+        ShowCommand command = parser.parse("n/   ");
+        assertNotNull(command);
+    }
+
+    @Test
+    public void parse_caseInsensitivePrefix_returnsCommand() throws Exception {
+        ShowCommand command = parser.parse("n/alice");
+        assertNotNull(command);
+    }
+
+    @Test
+    public void parse_phonePrefix_returnsCommand() throws Exception {
+        ShowCommand command = parser.parse("ph/9123");
+        assertNotNull(command);
+    }
+
+    @Test
+    public void parse_positionPrefix_returnsCommand() throws Exception {
+        ShowCommand command = parser.parse("pos/Manager");
+        assertNotNull(command);
+    }
+
+    @Test
+    public void parse_departmentPrefix_returnsCommand() throws Exception {
+        ShowCommand command = parser.parse("d/Finance");
+        assertNotNull(command);
+    }
+
+    @Test
+    public void parse_emailPrefix_returnsCommand() throws Exception {
+        ShowCommand command = parser.parse("e/gmail");
+        assertNotNull(command);
+    }
+
+    @Test
+    public void parse_multipleSamePrefix_returnsCommand() throws Exception {
+        ShowCommand command = parser.parse("n/Alice n/Bob");
+        assertNotNull(command);
+    }
+
+    @Test
+    public void parse_mixedPrefixesDifferentOrder_returnsCommand() throws Exception {
+        ShowCommand command = parser.parse("e/gmail n/Alice d/IT");
+        assertNotNull(command);
+    }
+
+    @Test
+    public void parse_invalidPrefixIgnored_returnsCommand() throws Exception {
+        ShowCommand command = parser.parse("x/unknown n/Alice");
+        assertNotNull(command);
+    }
+
+    @Test
+    public void parse_prefixWithoutValue_returnsCommand() throws Exception {
+        ShowCommand command = parser.parse("d/");
+        assertNotNull(command);
+    }
 }
