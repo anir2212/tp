@@ -172,6 +172,16 @@ public class AddCommandTest {
         public void addTaskToPerson(Employee person, Task task) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void markTask(int index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void removeCompletedTasks() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

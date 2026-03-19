@@ -97,4 +97,20 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Employee> predicate);
 
     void addTaskToPerson(Employee person, Task task);
+
+    /**
+     * Removes all completed tasks.
+     */
+    void removeCompletedTasks();
+
+    /**
+     * Marks a task as completed.
+     */
+    void markTask(int index);
+
+    /**
+     * Adds a task to the task list.
+     * @param task
+     */
+    void addTask(Task task);
 }

@@ -167,4 +167,20 @@ public class ModelManager implements Model {
                 && filteredPersons.equals(otherModelManager.filteredPersons);
     }
 
+    @Override
+    public void removeCompletedTasks() {
+        addressBook.removeCompletedTasks();
+    }
+
+    @Override
+    public void markTask(int index) {
+        requireNonNull(addressBook);
+        addressBook.markTask(index);
+    }
+
+    @Override
+    public void addTask(Task task) {
+        addressBook.addTask(task);
+    }
+
 }
