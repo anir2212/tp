@@ -6,6 +6,7 @@ package seedu.address.model.person;
 public class Task {
     private String taskName;
     private String taskDescription;
+    private boolean isCompleted;
 
     /**
      * Constructor for Task.
@@ -15,11 +16,13 @@ public class Task {
     public Task(String taskName, String taskDescription) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
+        this.isCompleted = false;
     }
 
     /**
      * Returns the name of the task.
-     * @return the name of the task.
+     *
+     * @return The task name.
      */
     public String getTaskName() {
         return taskName;
@@ -27,16 +30,37 @@ public class Task {
 
     /**
      * Returns the description of the task.
-     * @return the description of the task.
+     *
+     * @return The task description.
      */
     public String getTaskDescription() {
         return taskDescription;
     }
 
+    /**
+     * Returns true if the task is completed.
+     *
+     * @return True if completed, false otherwise.
+     */
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    /**
+     * Marks the task as completed.
+     */
+    public void markAsCompleted() {
+        isCompleted = true;
+    }
+
+    /**
+     * Returns the string representation of the task.
+     *
+     * @return A string in the format "taskName: taskDescription".
+     */
     @Override
     public String toString() {
         return taskName + ": " + taskDescription;
     }
-
 
 }
