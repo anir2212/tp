@@ -29,4 +29,11 @@ public class TaskList {
         internalList.removeIf(Task::isCompleted);
     }
 
+    /**
+     * Marks the task at the specified index as completed.
+     * @param index zero-based index of the task.
+     */
+    public void markTask(int index) {
+        internalList.get(index).markAsCompleted();
+    }
 }
