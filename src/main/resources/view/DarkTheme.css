@@ -82,6 +82,31 @@
     -fx-background-color: rgba(96, 165, 250, 0.18);
 }
 
+.task-header-label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.task-flow-pane {
+    -fx-hgap: 8;
+    -fx-vgap: 6;
+}
+
+.task-card-label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+
+    -fx-background-color: rgba(255, 92, 92, 0.15);
+    -fx-border-color: rgba(255, 92, 92, 0.4);
+
+    -fx-border-radius: 14;
+    -fx-background-radius: 14;
+
+    -fx-padding: 6 12 6 12;
+}
+
 .split-pane:horizontal .split-pane-divider {
     -fx-background-color: rgba(255, 255, 255, 0.32);
     -fx-border-color: transparent transparent transparent rgba(203, 213, 225, 0.45);

@@ -25,4 +25,5 @@ public class EmployeeCardTest {
     public void formatPosition_validPosition_returnsFormattedString() {
         assertEquals("💼  Manager", EmployeeCard.formatPosition("Manager"));
     }
+
 }
