@@ -13,7 +13,6 @@ import seedu.address.model.employee.Employee;
 import seedu.address.model.employee.Name;
 import seedu.address.model.employee.Phone;
 import seedu.address.model.employee.Position;
-import seedu.address.model.employee.Task;
 import seedu.address.model.employee.TaskListStorage;
 import seedu.address.model.tag.Tag;
 
@@ -23,11 +22,6 @@ import seedu.address.model.tag.Tag;
  */
 public class SampleDataUtil {
     public static Employee[] getSamplePersons() {
-        //Task a = new Task("Task 1", "2024-06-30");
-        //Task b = new Task("Task 2", "2024-07-01");
-        TaskListStorage taskListStorageSample = new TaskListStorage(new ArrayList<>());
-        //taskListStorageSample.addTask(a);
-        //taskListStorageSample.addTask(b);
         return new Employee[] {
             new Employee(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                     new Department("IT"), new Position("Junior software developer"),

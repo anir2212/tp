@@ -6,15 +6,18 @@ package seedu.address.model.employee;
 public class Task {
     public static final String MESSAGE_CONSTRAINTS_TASK_NAME = "Enter a valid task name.";
     public static final String MESSAGE_CONSTRAINTS_TASK_DESCRIPTION = "Enter a valid task description.";
+
+    private static int taskIndex = 1;
+
     private String taskName;
     private String taskDescription;
     private boolean isCompleted;
-    public static int taskIndex = 1;
     private int currentTaskIndex;
 
     /**
      * Constructor for Task.
-     * @param taskName the name of the task.
+     *
+     * @param taskName        the name of the task.
      * @param taskDescription the description of the task.
      */
     public Task(String taskName, String taskDescription, int currentTaskIndex) {
