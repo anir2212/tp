@@ -2,9 +2,10 @@ package seedu.address.storage;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+import seedu.address.model.employee.Employee;
 import seedu.address.model.employee.Task;
 
 /**
@@ -12,30 +13,42 @@ import seedu.address.model.employee.Task;
  */
 public class TaskList {
 
-    private final List<Task> internalList = new ArrayList<>();
+    private final Map<Task, Employee> internalMap = new HashMap<>();
 
     /**
-     * Adds a task to the list.
-     *
-     * @param task The task to be added. Must not be null.
+     * Adds a task to the list with the assigned employee.
+     * @param task the task to be added.
+     * @param person the employee to whom the task is assigned.
      */
-    public void addTaskOverall(Task task) {
+    public void addTaskOverall(Task task, Employee person) {
         requireNonNull(task);
-        internalList.add(task);
+        requireNonNull(person);
+        internalMap.put(task, person);
     }
 
     /**
-     * Removes all tasks that are marked as completed from the list.
+     * Returns a string representation of all tasks and their assigned employees.
+     * @return a string listing all tasks and their assigned employees.
      */
-    public void removeCompletedTasks() {
-        internalList.removeIf(Task::isCompleted);
-    }
+    public String showFullTaskList() {
+        if (internalMap.isEmpty()) {
+            return "No tasks assigned.";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("Full Task List:\n");
+        int index = 1;
+        for (Map.Entry<Task, Employee> entry : internalMap.entrySet()) {
+            Task task = entry.getKey();
+            Employee person = entry.getValue();
+            sb.append(index)
+                    .append(". ")
+                    .append(task.getTaskName())
+                    .append(" - Assigned to: ")
+                    .append(person.getName())
+                    .append("\n");
 
-    /**
-     * Marks the task at the specified index as completed.
-     * @param index zero-based index of the task.
-     */
-    public void markTask(int index) {
-        internalList.get(index).markAsCompleted();
+            index++;
+        }
+        return sb.toString();
     }
 }
