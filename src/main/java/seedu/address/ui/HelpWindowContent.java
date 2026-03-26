@@ -26,8 +26,6 @@ public final class HelpWindowContent {
                         "INDEX with one or more optional fields: [n/NAME] [p/PHONE] [e/EMAIL] "
                                 + "[d/DEPARTMENT] [pos/POSITION] [t/TAG]...",
                         List.of("edit 1 p/91234567 e/johndoe@example.com")),
-                new HelpSection("find", "Finds employees whose names contain any keyword.",
-                        "KEYWORD [MORE_KEYWORDS]...", List.of("find alice bob charlie")),
                 new HelpSection("list", "Lists all employees.",
                         "No additional parameters.", List.of("list")),
                 new HelpSection("show", "Filters employees by one or more fields.",

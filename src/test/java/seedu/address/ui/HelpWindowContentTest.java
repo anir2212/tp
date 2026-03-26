@@ -18,7 +18,7 @@ public class HelpWindowContentTest {
     public void getHelpSections_returnsExpectedCommandSections() {
         List<HelpSection> helpSections = HelpWindowContent.getHelpSections();
 
-        assertEquals(11, helpSections.size());
+        assertEquals(10, helpSections.size());
         assertEquals("help", helpSections.get(0).commandWord());
         assertEquals("Shows this in-app help window.", helpSections.get(0).description());
         assertEquals("No additional parameters.", helpSections.get(0).allowedInput());
@@ -35,7 +35,7 @@ public class HelpWindowContentTest {
     public void getDisplaySections_returnsFormattedDisplaySections() {
         List<HelpSectionDisplay> displaySections = HelpWindowContent.getDisplaySections();
 
-        assertEquals(11, displaySections.size());
+        assertEquals(10, displaySections.size());
         assertIterableEquals(List.of(
                 new DisplayLine("help", "help-command-title"),
                 new DisplayLine("Shows this in-app help window.", "help-command-description"),
