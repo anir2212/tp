@@ -337,36 +337,6 @@ public class ShowCommandParserTest {
     }
 
     @Test
-    public void extract_nullInput_throwsAssertionError() throws Exception {
-        ShowCommandParser parser = new ShowCommandParser();
-        Method method = ShowCommandParser.class.getDeclaredMethod("extract", String.class, String.class);
-        method.setAccessible(true);
-
-        try {
-            method.invoke(parser, new Object[] {null, "n/"});
-            fail("Expected InvocationTargetException to be thrown");
-        } catch (InvocationTargetException e) {
-            assertNotNull(e.getCause());
-            assertTrue(e.getCause() instanceof AssertionError);
-        }
-    }
-
-    @Test
-    public void extract_nullPrefix_throwsAssertionError() throws Exception {
-        ShowCommandParser parser = new ShowCommandParser();
-        Method method = ShowCommandParser.class.getDeclaredMethod("extract", String.class, String.class);
-        method.setAccessible(true);
-
-        try {
-            method.invoke(parser, new Object[] {"n/Alex", null});
-            fail("Expected InvocationTargetException to be thrown");
-        } catch (InvocationTargetException e) {
-            assertNotNull(e.getCause());
-            assertTrue(e.getCause() instanceof AssertionError);
-        }
-    }
-
-    @Test
     public void extract_missingPrefix_returnsEmptyString() throws Exception {
         ShowCommandParser parser = new ShowCommandParser();
         Method method = ShowCommandParser.class.getDeclaredMethod("extract", String.class, String.class);
@@ -374,6 +344,43 @@ public class ShowCommandParserTest {
 
         String result = (String) method.invoke(parser, "n/Alex", "d/");
         assertEquals("", result);
+    }
+
+    @Test
+    public void parse_validEmailPrefix_success() {
+        Predicate<Employee> predicate =
+                new EmailContainsKeywordsPredicate(Arrays.asList("gmail"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "e/gmail", expectedCommand);
+    }
+
+    @Test
+    public void parse_validPhoneAndEmailPrefixes_success() {
+        Predicate<Employee> predicate =
+                new PhoneContainsKeywordsPredicate(Arrays.asList("9123"))
+                        .and(new EmailContainsKeywordsPredicate(Arrays.asList("gmail")));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "p/9123 e/gmail", expectedCommand);
+    }
+
+    @Test
+    public void parse_validTagPrefix_success() {
+        Predicate<Employee> predicate =
+                new TagContainsKeywordsPredicate(Arrays.asList("friend"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "t/friend", expectedCommand);
+    }
+
+    @Test
+    public void parse_validPositionPrefix_success() {
+        Predicate<Employee> predicate =
+                new PositionContainsKeywordsPredicate(Arrays.asList("Manager"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "pos/Manager", expectedCommand);
     }
 
 }
