@@ -2,11 +2,7 @@ package seedu.address.storage;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -14,16 +10,19 @@ import java.util.NoSuchElementException;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.model.employee.Employee;
 import seedu.address.model.employee.Task;
-import seedu.address.model.employee.UniquePersonList;
 
 /**
  * A list of tasks.
  */
 public class TaskList {
 
-    private final Map<Task, Employee> internalMap = new HashMap<>();
     private static int latestTaskIndex = 1;
+    private final Map<Task, Employee> internalMap = new HashMap<>();
 
+    /**
+     * Constructor for TaskList
+     * @param employees Filtered List of Employees.
+     */
     public TaskList(FilteredList<Employee> employees) {
         requireNonNull(employees);
 
@@ -37,16 +36,20 @@ public class TaskList {
             }
         }
 
-
-    }
-
-    public static int getLatestTaskIndex() {
-        return latestTaskIndex;
     }
 
     /**
+     * Empty TaskList Constructor for testing.
+     */
+    public TaskList() {
+
+    }
+
+
+    /**
      * Adds a task to the list with the assigned employee.
-     * @param task the task to be added.
+     *
+     * @param task   the task to be added.
      * @param person the employee to whom the task is assigned.
      */
     public void addTaskOverall(Task task, Employee person) {
@@ -58,6 +61,7 @@ public class TaskList {
 
     /**
      * Returns a string representation of all tasks and their assigned employees.
+     *
      * @return a string listing all tasks and their assigned employees.
      */
     public String showFullTaskList() {
@@ -113,10 +117,4 @@ public class TaskList {
         throw new NoSuchElementException();
     }
 
-    private String extractPersonDetails(Employee person) {
-
-        return "n/" + person.getName() + " " + "p/" + person.getPhone() + " " + "e/" + person.getEmail() + " " + "d/"
-                + person.getDepartment() + " " + "pos/" + person.getPosition() + " " + "t/"
-                + person.getTags() + " " + "task/" + person.getTaskListStorage();
-    }
 }

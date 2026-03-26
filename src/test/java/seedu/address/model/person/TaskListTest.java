@@ -15,14 +15,13 @@ import seedu.address.model.employee.Phone;
 import seedu.address.model.employee.Position;
 import seedu.address.model.employee.Task;
 import seedu.address.model.employee.TaskListStorage;
-import seedu.address.model.employee.UniquePersonList;
 import seedu.address.storage.TaskList;
 
 public class TaskListTest {
 
     @Test
     public void addsTasksToTaskList_updatesTaskListCorrectly() {
-        TaskList taskList = new TaskList(new UniquePersonList());
+        TaskList taskList = new TaskList();
 
         Task t1 = new Task("task1", "desc1", 1);
 
@@ -38,7 +37,7 @@ public class TaskListTest {
 
     @Test
     public void deleteTask_removesTaskByTaskIndex() {
-        TaskList taskList = new TaskList(new UniquePersonList());
+        TaskList taskList = new TaskList();
 
         Task t1 = new Task("task1", "desc1", 1);
         Employee person = new Employee(new Name("John Doe"), new Phone("96969696"),
