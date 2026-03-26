@@ -10,6 +10,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.ui.HelpWindowContent.HelpSection;
 
 /**
  * Controller for a help page
@@ -72,33 +73,7 @@ public class HelpWindow extends UiPart<Stage> {
         assert helpSections != null;
         helpSections.getChildren().clear();
 
-        addSection(new HelpSection("help", "Shows this in-app help window.",
-                "No additional parameters.", "help"));
-        addSection(new HelpSection("add", "Adds an employee.",
-                "n/NAME p/PHONE e/EMAIL d/DEPARTMENT pos/POSITION [t/TAG]...",
-                "add n/John Doe p/98765432 e/johnd@example.com d/IT pos/Software Engineer t/fulltime"));
-        addSection(new HelpSection("delete", "Deletes an employee by unique name or list index.",
-                "NAME or INDEX.", "delete John Doe", "delete 2"));
-        addSection(new HelpSection("edit", "Edits an employee identified by index.",
-                "INDEX with one or more optional fields: [n/NAME] [p/PHONE] [e/EMAIL] "
-                        + "[d/DEPARTMENT] [pos/POSITION] [t/TAG]...",
-                "edit 1 p/91234567 e/johndoe@example.com"));
-        addSection(new HelpSection("find", "Finds employees whose names contain any keyword.",
-                "KEYWORD [MORE_KEYWORDS]...", "find alice bob charlie"));
-        addSection(new HelpSection("list", "Lists all employees.",
-                "No additional parameters.", "list"));
-        addSection(new HelpSection("show", "Filters employees by one or more fields.",
-                "At least one of n/ d/ p/ e/ pos/ t/ task/.",
-                "show n/Alex d/IT"));
-        addSection(new HelpSection("addtask", "Adds a task to an employee by name.",
-                "task/TASK_NAME desc/TASK_DESCRIPTION n/EMPLOYEE_NAME",
-                "addtask task/Prepare Report desc/Submit by Friday n/John Doe"));
-        addSection(new HelpSection("deletetask", "Deletes a task by task index.",
-                "INDEX.", "deletetask 1"));
-        addSection(new HelpSection("clear", "Clears all employees from the address book.",
-                "No additional parameters.", "clear"));
-        addSection(new HelpSection("exit", "Exits ManageUp.",
-                "No additional parameters.", "exit"));
+        HelpWindowContent.getHelpSections().forEach(this::addSection);
     }
 
     private void addSection(HelpSection section) {
@@ -127,8 +102,6 @@ public class HelpWindow extends UiPart<Stage> {
 
         helpSections.getChildren().add(sectionCard);
     }
-
-    private record HelpSection(String commandWord, String description, String allowedInput, String... examples) { }
 
     /**
      * Returns true if the help window is currently being shown.
