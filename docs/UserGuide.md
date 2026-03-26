@@ -103,7 +103,9 @@ contact details, roles, departments, and assigned tasks more efficiently.
 <a id="viewing-help"></a>
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Shows an in-app help window with supported commands, allowed inputs, and examples.
+The help window also includes a button to copy the online user guide URL if you want
+to open the full guide in a browser.
 
 ![help message](images/helpMessage.png)
 
@@ -310,13 +312,16 @@ Examples:
 <a id="deleting-an-employee"></a>
 ### Deleting an employee : `delete`
 
-Deletes the specified employee from the address book.
+Deletes one or more specified employees from the address book.
 
-Format: `delete NAME` or `delete INDEX`
+Format: `delete NAME` or `delete INDEX [MORE_INDEXES]...`
 
 * `delete INDEX` deletes the employee at the specified `INDEX`.
 * The index refers to the index number shown in the displayed employee list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* You can provide multiple indexes in one command to batch delete employees.
+* When multiple indexes are provided, every index must be valid before any employee is deleted.
+* Duplicate indexes in the same command are not allowed.
 * `delete NAME` deletes the employee whose name matches `NAME`, ignoring case and extra spaces.
 * `delete NAME` works only when exactly one employee matches the given name.
 * If multiple employees share the same name, use `delete INDEX` instead.
@@ -324,6 +329,7 @@ Format: `delete NAME` or `delete INDEX`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd employee in the address book.
 * `show d/HR` followed by `delete 1` deletes the 1st employee in the filtered employee list.
+* `list` followed by `delete 1 3 5` deletes the 1st, 3rd, and 5th employees in the displayed employee list.
 * `delete John Doe` deletes the employee named `John Doe` if the name is unique in the current list.
 
 <a id="adding-a-task-to-an-employee"></a>
