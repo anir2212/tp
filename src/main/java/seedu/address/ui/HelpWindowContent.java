@@ -46,7 +46,36 @@ public final class HelpWindowContent {
     }
 
     /**
+     * Returns display-ready help sections for the help window UI.
+     */
+    public static List<HelpSectionDisplay> getDisplaySections() {
+        return getHelpSections().stream()
+                .map(section -> new HelpSectionDisplay(
+                        List.of(
+                                new DisplayLine(section.commandWord(), "help-command-title"),
+                                new DisplayLine(section.description(), "help-command-description"),
+                                new DisplayLine("Allowed input: " + section.allowedInput(),
+                                        "help-command-allowed-input")),
+                        section.examples().stream()
+                                .map(example -> new DisplayLine("Example: " + example, "help-command-example"))
+                                .toList()))
+                .toList();
+    }
+
+    /**
      * Represents one command section in the help window.
      */
     public record HelpSection(String commandWord, String description, String allowedInput, List<String> examples) { }
+
+    /**
+     * Represents one display-ready command section in the help window.
+     */
+    public record HelpSectionDisplay(
+            List<DisplayLine> headerLines,
+            List<DisplayLine> exampleLines) { }
+
+    /**
+     * Represents one display line in a help section.
+     */
+    public record DisplayLine(String text, String styleClass) { }
 }

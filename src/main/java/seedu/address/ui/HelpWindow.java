@@ -10,7 +10,8 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.ui.HelpWindowContent.HelpSection;
+import seedu.address.ui.HelpWindowContent.DisplayLine;
+import seedu.address.ui.HelpWindowContent.HelpSectionDisplay;
 
 /**
  * Controller for a help page
@@ -73,34 +74,30 @@ public class HelpWindow extends UiPart<Stage> {
         assert helpSections != null;
         helpSections.getChildren().clear();
 
-        HelpWindowContent.getHelpSections().forEach(this::addSection);
+        HelpWindowContent.getDisplaySections().stream()
+                .map(HelpWindow::createSectionCard)
+                .forEach(helpSections.getChildren()::add);
     }
 
-    private void addSection(HelpSection section) {
+    private static VBox createSectionCard(HelpSectionDisplay section) {
         VBox sectionCard = new VBox(8);
         sectionCard.getStyleClass().add("help-section-card");
 
-        Label commandTitle = new Label(section.commandWord());
-        commandTitle.getStyleClass().add("help-command-title");
+        section.headerLines().stream()
+                .map(HelpWindow::createStyledLabel)
+                .forEach(sectionCard.getChildren()::add);
+        section.exampleLines().stream()
+                .map(HelpWindow::createStyledLabel)
+                .forEach(sectionCard.getChildren()::add);
 
-        Label description = new Label(section.description());
-        description.setWrapText(true);
-        description.getStyleClass().add("help-command-description");
+        return sectionCard;
+    }
 
-        Label allowedInput = new Label("Allowed input: " + section.allowedInput());
-        allowedInput.setWrapText(true);
-        allowedInput.getStyleClass().add("help-command-allowed-input");
-
-        sectionCard.getChildren().addAll(commandTitle, description, allowedInput);
-
-        for (String example : section.examples()) {
-            Label exampleLabel = new Label("Example: " + example);
-            exampleLabel.setWrapText(true);
-            exampleLabel.getStyleClass().add("help-command-example");
-            sectionCard.getChildren().add(exampleLabel);
-        }
-
-        helpSections.getChildren().add(sectionCard);
+    private static Label createStyledLabel(DisplayLine line) {
+        Label label = new Label(line.text());
+        label.setWrapText(true);
+        label.getStyleClass().add(line.styleClass());
+        return label;
     }
 
     /**
