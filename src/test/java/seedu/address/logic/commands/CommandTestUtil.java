@@ -8,6 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK_NAME;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ import seedu.address.model.Model;
 import seedu.address.model.employee.Employee;
 import seedu.address.model.employee.predicatechecker.NameContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
+
 
 /**
  * Contains helper methods for testing commands.
@@ -39,6 +43,10 @@ public class CommandTestUtil {
     public static final String VALID_DEPARTMENT_BOB = "Sales";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_TASK_NAME_PRESENTATION = "Finish Presentation";
+    public static final String VALID_TASK_NAME_REPORT = "Write Report";
+    public static final String VALID_TASK_DESCRIPTION_PRESENTATION = "Complete demo presentation by tomorrow";
+    public static final String VALID_TASK_DESCRIPTION_REPORT = "Submit Q3 report by Friday";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -52,6 +60,12 @@ public class CommandTestUtil {
     public static final String POSITION_DESC_BOB = " " + PREFIX_POSITION + VALID_POSITION_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String TASK_NAME_PRESENTATION = " " + PREFIX_TASK_NAME + VALID_TASK_NAME_PRESENTATION;
+    public static final String TASK_NAME_REPORT = " " + PREFIX_TASK_NAME + VALID_TASK_NAME_REPORT;
+    public static final String TASK_DESC_PRESENTATION = " " + PREFIX_TASK_DESCRIPTION
+                                                                 + VALID_TASK_DESCRIPTION_PRESENTATION;
+    public static final String TASK_DESC_REPORT = " " + PREFIX_TASK_DESCRIPTION
+                                                           + VALID_TASK_DESCRIPTION_REPORT;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -60,12 +74,17 @@ public class CommandTestUtil {
                                                        + PREFIX_DEPARTMENT; // empty string not allowed for departments
     public static final String INVALID_POSITION_DESC = " " + PREFIX_POSITION; // empty string not allowed for positions
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_TASK_NAME = " " + PREFIX_NAME; //empty string not allowed for task name
+    //empty string not allowed for task description
+    public static final String INVALID_TASK_DESC = " " + PREFIX_TASK_DESCRIPTION;
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditTaskCommand.EditTaskDescriptor DESC_PRESENTATION;
+    public static final EditTaskCommand.EditTaskDescriptor DESC_REPORT;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -74,6 +93,15 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withDepartment(VALID_DEPARTMENT_BOB)
                 .withPosition(VALID_POSITION_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+
+        DESC_PRESENTATION = new EditTaskDescriptorBuilder()
+                .withTaskName(VALID_TASK_NAME_PRESENTATION)
+                .withTaskDescription(VALID_TASK_DESCRIPTION_PRESENTATION)
+                .build();
+        DESC_REPORT = new EditTaskDescriptorBuilder()
+                .withTaskName(VALID_TASK_NAME_REPORT)
+                .withTaskDescription(VALID_TASK_DESCRIPTION_REPORT)
+                .build();
     }
 
     /**
