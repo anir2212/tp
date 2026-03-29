@@ -9,6 +9,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -125,6 +126,60 @@ public class UniquePersonListTest {
         uniquePersonList.remove(ALICE);
         UniquePersonList expectedUniquePersonList = new UniquePersonList();
         assertEquals(expectedUniquePersonList, uniquePersonList);
+    }
+
+    @Test
+    public void replaceTaskForEmployee_nameAndDescriptionEdited_success() {
+        Task originalTask = new Task("Original Task", "Original desc", 1);
+        Task newTask = new Task("Updated Task", "Updated desc", 1);
+
+        TaskListStorage taskListStorage = new TaskListStorage(new ArrayList<>());
+        taskListStorage.addTask(originalTask);
+        Employee employee = new PersonBuilder().withTaskListStorage(taskListStorage).build();
+
+        uniquePersonList.add(employee);
+        uniquePersonList.replaceTaskForPerson(employee, originalTask, newTask);
+
+        Employee updatedEmployee = uniquePersonList.asUnmodifiableObservableList().get(0);
+        assertTrue(updatedEmployee.getTaskListStorage().getTasks().contains(newTask));
+        assertFalse(updatedEmployee.getTaskListStorage().getTasks().contains(originalTask));
+    }
+
+    @Test
+    public void replaceTaskForEmployee_employeeNotInList_throwsPersonNotFoundException() {
+        Task originalTask = new Task("Original Task", "Original desc", 1);
+        Task newTask = new Task("Updated Task", "Updated desc", 1);
+        Employee employee = new PersonBuilder().build();
+
+        assertThrows(PersonNotFoundException.class, ()
+                -> uniquePersonList.replaceTaskForPerson(employee, originalTask, newTask));
+    }
+
+    @Test
+    public void replaceTaskForEmployee_nullEmployee_throwsNullPointerException() {
+        Task originalTask = new Task("Original Task", "Original desc", 1);
+        Task newTask = new Task("Updated Task", "Updated desc", 1);
+
+        assertThrows(NullPointerException.class, ()
+                -> uniquePersonList.replaceTaskForPerson(null, originalTask, newTask));
+    }
+
+    @Test
+    public void replaceTaskForEmployee_nullOldTask_throwsNullPointerException() {
+        Employee employee = new PersonBuilder().build();
+        Task newTask = new Task("Updated Task", "Updated desc", 1);
+
+        assertThrows(NullPointerException.class, ()
+                -> uniquePersonList.replaceTaskForPerson(employee, null, newTask));
+    }
+
+    @Test
+    public void replaceTaskForEmployee_nullNewTask_throwsNullPointerException() {
+        Employee employee = new PersonBuilder().build();
+        Task originalTask = new Task("Original Task", "Original desc", 1);
+
+        assertThrows(NullPointerException.class, ()
+                -> uniquePersonList.replaceTaskForPerson(employee, originalTask, null));
     }
 
     @Test

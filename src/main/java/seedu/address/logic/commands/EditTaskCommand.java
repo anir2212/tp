@@ -27,7 +27,7 @@ public class EditTaskCommand extends Command {
             + "Parameters: TASK INDEX (must be a positive integer) "
             + "[" + PREFIX_TASK_NAME + "TASK NAME] "
             + "[" + PREFIX_TASK_DESCRIPTION + "DESCRIPTION]... \n"
-            + "Example: " +  COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_TASK_NAME + "Close deal "
             + PREFIX_TASK_DESCRIPTION + "Follow through with clients ";
 
@@ -111,6 +111,9 @@ public class EditTaskCommand extends Command {
 
         public EditTaskDescriptor() {}
 
+        /**
+         * Copy constructor.
+         */
         public EditTaskDescriptor(EditTaskDescriptor toCopy) {
             setTaskName(toCopy.taskName);
             setTaskDescription(toCopy.taskDescription);

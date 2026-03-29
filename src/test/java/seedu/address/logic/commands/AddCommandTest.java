@@ -185,6 +185,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public java.util.Optional<Task> getTaskByIndex(int taskIndex) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setTask(int taskIndex, Task newTask) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void deleteTask(int taskIndex) {
             throw new AssertionError("This method should not be called.");
         }
