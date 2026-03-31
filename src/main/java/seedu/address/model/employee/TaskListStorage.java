@@ -2,10 +2,6 @@ package seedu.address.model.employee;
 
 import java.util.ArrayList;
 
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-
-
 /**
  * A class to represent the storage of TaskList.
  */
@@ -40,16 +36,22 @@ public class TaskListStorage {
         return result;
     }
 
+    /**
+     * Adds a task to the list of tasks stored.
+     *
+     * @param modelType the task to be added.
+     */
     public void addTask(Task modelType) {
-        if (tasks.contains(modelType)) {
-            return;
-
-        }
-
         tasks.add(modelType);
 
     }
 
+    /**
+     * Deletes a task from the list of tasks stored.
+     *
+     * @param task the task to be deleted.
+     * @return true if the task was successfully deleted, false otherwise.
+     */
     public boolean deleteTask(Task task) {
         return tasks.remove(task);
     }
@@ -60,7 +62,6 @@ public class TaskListStorage {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof TaskListStorage)) {
             return false;
         }
