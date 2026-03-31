@@ -14,6 +14,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.employee.Employee;
 import seedu.address.model.employee.Task;
+import seedu.address.model.employee.TaskListStorage;
 import seedu.address.storage.TaskList;
 
 /**
@@ -174,8 +175,6 @@ public class ModelManager implements Model {
     }
 
 
-
-
     public void addTaskOverall(Task task, Employee person) {
         addressBook.addTask(task, person, tasks);
     }
@@ -197,6 +196,17 @@ public class ModelManager implements Model {
     @Override
     public void setTask(int taskIndex, Task newTask) {
         addressBook.setTask(taskIndex, newTask, tasks);
+    }
+
+    @Override
+    public Task getTaskWithSameDescription(Task task, Employee person) {
+        TaskListStorage taskListStorage = person.getTaskListStorage();
+        if (taskListStorage.getTasks().contains(task)) {
+            return task;
+
+        } else {
+            return null;
+        }
     }
 
 
