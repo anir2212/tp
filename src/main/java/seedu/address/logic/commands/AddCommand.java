@@ -15,13 +15,13 @@ import seedu.address.model.Model;
 import seedu.address.model.employee.Employee;
 
 /**
- * Adds a person to the address book.
+ * Adds an employee to the application.
  */
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an employee to the address book. \n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -38,12 +38,7 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    public static final String MESSAGE_DUPLICATE_PHONE =
-            "Phone number is already assigned to another employee: %1$s";
-    public static final String MESSAGE_DUPLICATE_EMAIL =
-            "Email is already assigned to another employee: %1$s";
+    public static final String MESSAGE_SUCCESS = "New employee added: %1$s";
 
     private final Employee toAdd;
 
@@ -60,18 +55,20 @@ public class AddCommand extends Command {
         requireNonNull(model);
 
         if (model.hasPerson(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(Messages.MESSAGE_DUPLICATE_EMPLOYEE);
         }
 
         Employee employeeWithSamePhone = model.getEmployeeWithSamePhone(toAdd);
         Employee employeeWithSameEmail = model.getEmployeeWithSameEmail(toAdd);
 
         if (employeeWithSameEmail != null) {
-            throw new CommandException(String.format(MESSAGE_DUPLICATE_EMAIL, Messages.format(employeeWithSameEmail)));
+            throw new CommandException(String.format(Messages.MESSAGE_DUPLICATE_EMAIL,
+                                       Messages.format(employeeWithSameEmail)));
         }
 
         if (employeeWithSamePhone != null) {
-            throw new CommandException(String.format(MESSAGE_DUPLICATE_PHONE, Messages.format(employeeWithSamePhone)));
+            throw new CommandException(String.format(Messages.MESSAGE_DUPLICATE_PHONE,
+                                       Messages.format(employeeWithSamePhone)));
         }
 
         model.addPerson(toAdd);
