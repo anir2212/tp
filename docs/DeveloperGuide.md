@@ -201,15 +201,20 @@ When a new task is created, the task is assigned the next available task index. 
 
 #### Add task implementation
 
-`addtask` is parsed by `AddTaskCommandParser`, which extracts the task name, task description, and employee name from
+`addtask` is parsed by `AddTaskCommandParser`, which extracts the task name, task description, and employee index from
 the command input before constructing an `AddTaskCommand`.
 
 During execution:
 
-1. The command finds the target employee by name.
-2. A new `Task` is created with an assigned task index.
-3. The task is added to the employee's own `TaskListStorage`.
-4. The same task is also added to the overall in-memory `TaskList`.
+1. `AddressBookParser` recognises the `addtask` command and delegates parsing to `AddTaskCommandParser`.
+2. `AddTaskCommandParser` extracts the task name, task description, and employee index from the command input.
+3.  A new `Task` is created with the extracted details and an assigned task index.
+4. `AddTaskCommandParser` constructs an `AddTaskCommand` with the new `Task` and employee index.
+5. `AddTaskCommand` calls `Model#addTask(task, employeeIndex)`.
+6. `ModelManager` forwards the request to `AddressBook`, together with the overall in-memory `TaskList`.
+7. `AddressBook` updates the overall `TaskList` to include the new task and its owning employee.
+8.  The task is also updated to the employee's own `TaskListStorage`.
+
 
 This two-level update ensures that the task is both visible on the employee card and discoverable by future task
 commands that operate by task index.
@@ -268,11 +273,11 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th employee in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …​` to add a new employee. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -282,7 +287,7 @@ Step 3. The user executes `add n/David …​` to add a new person. The `add` co
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `delete` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
