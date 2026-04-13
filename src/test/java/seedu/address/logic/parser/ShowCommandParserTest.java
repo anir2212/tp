@@ -13,7 +13,11 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.ShowCommand;
+import seedu.address.model.employee.Department;
 import seedu.address.model.employee.Employee;
+import seedu.address.model.employee.Name;
+import seedu.address.model.employee.Phone;
+import seedu.address.model.employee.Position;
 import seedu.address.model.employee.predicatechecker.DepartmentContainsKeywordsPredicate;
 import seedu.address.model.employee.predicatechecker.EmailContainsKeywordsPredicate;
 import seedu.address.model.employee.predicatechecker.NameContainsKeywordsPredicate;
@@ -129,6 +133,26 @@ public class ShowCommandParserTest {
     }
 
     @Test
+    public void parse_invalidName_failure() {
+        assertParseFailure(parser, "n/$#", Name.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_invalidDepartment_failure() {
+        assertParseFailure(parser, "d/**", Department.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_invalidPhone_failure() {
+        assertParseFailure(parser, "p/9fv", Phone.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_invalidPosition_failure() {
+        assertParseFailure(parser, "pos/***", Position.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
     public void parse_namePrefix_success() {
         Predicate<Employee> predicate =
                 new NameContainsKeywordsPredicate(Arrays.asList("Alice"));
@@ -153,15 +177,6 @@ public class ShowCommandParserTest {
         ShowCommand expectedCommand = new ShowCommand(predicate);
 
         assertParseSuccess(parser, "p/9123", expectedCommand);
-    }
-
-    @Test
-    public void parse_emailPrefix_success() {
-        Predicate<Employee> predicate =
-                new EmailContainsKeywordsPredicate(Arrays.asList("gmail"));
-        ShowCommand expectedCommand = new ShowCommand(predicate);
-
-        assertParseSuccess(parser, "e/gmail", expectedCommand);
     }
 
     @Test
@@ -196,10 +211,10 @@ public class ShowCommandParserTest {
         Predicate<Employee> predicate =
                 new NameContainsKeywordsPredicate(Arrays.asList("Alice"))
                         .and(new DepartmentContainsKeywordsPredicate(Arrays.asList("IT")))
-                        .and(new EmailContainsKeywordsPredicate(Arrays.asList("gmail")));
+                        .and(new EmailContainsKeywordsPredicate(Arrays.asList("alice@gmail.com")));
         ShowCommand expectedCommand = new ShowCommand(predicate);
 
-        assertParseSuccess(parser, "n/Alice d/IT e/gmail", expectedCommand);
+        assertParseSuccess(parser, "n/Alice d/IT e/alice@gmail.com", expectedCommand);
     }
 
     @Test
@@ -291,12 +306,12 @@ public class ShowCommandParserTest {
     @Test
     public void parse_prefixesInDifferentOrder_success() {
         Predicate<Employee> predicate =
-                new EmailContainsKeywordsPredicate(Arrays.asList("gmail"))
+                new EmailContainsKeywordsPredicate(Arrays.asList("alice@gmail.com"))
                         .and(new NameContainsKeywordsPredicate(Arrays.asList("Alice")))
                         .and(new DepartmentContainsKeywordsPredicate(Arrays.asList("IT")));
         ShowCommand expectedCommand = new ShowCommand(predicate);
 
-        assertParseSuccess(parser, "e/gmail n/Alice d/IT", expectedCommand);
+        assertParseSuccess(parser, "e/alice@gmail.com n/Alice d/IT", expectedCommand);
     }
 
     @Test
@@ -366,12 +381,14 @@ public class ShowCommandParserTest {
                 new NameContainsKeywordsPredicate(Arrays.asList("Alice"))
                         .and(new DepartmentContainsKeywordsPredicate(Arrays.asList("IT")))
                         .and(new PhoneContainsKeywordsPredicate(Arrays.asList("9123")))
-                        .and(new EmailContainsKeywordsPredicate(Arrays.asList("gmail")))
+                        .and(new EmailContainsKeywordsPredicate(Arrays.asList("alice@gmail.com")))
                         .and(new PositionContainsKeywordsPredicate(Arrays.asList("Manager")))
                         .and(new TagContainsKeywordsPredicate(Arrays.asList("friend")));
         ShowCommand expectedCommand = new ShowCommand(predicate);
 
-        assertParseSuccess(parser, "n/Alice d/IT p/9123 e/gmail pos/Manager t/friend", expectedCommand);
+        assertParseSuccess(parser,
+                "n/Alice d/IT p/9123 e/alice@gmail.com pos/Manager t/friend",
+                expectedCommand);
     }
 
     @Test
@@ -380,14 +397,14 @@ public class ShowCommandParserTest {
                 new NameContainsKeywordsPredicate(Arrays.asList("Alice"))
                         .and(new DepartmentContainsKeywordsPredicate(Arrays.asList("IT")))
                         .and(new PhoneContainsKeywordsPredicate(Arrays.asList("9123")))
-                        .and(new EmailContainsKeywordsPredicate(Arrays.asList("gmail")))
+                        .and(new EmailContainsKeywordsPredicate(Arrays.asList("alice@gmail.com")))
                         .and(new PositionContainsKeywordsPredicate(Arrays.asList("Manager")))
                         .and(new TagContainsKeywordsPredicate(Arrays.asList("friend")))
                         .and(new TaskContainsKeywordsPredicate(Arrays.asList("report")));
         ShowCommand expectedCommand = new ShowCommand(predicate);
 
         assertParseSuccess(parser,
-                "n/Alice d/IT p/9123 e/gmail pos/Manager t/friend task/report",
+                "n/Alice d/IT p/9123 e/alice@gmail.com pos/Manager t/friend task/report",
                 expectedCommand);
     }
 
@@ -404,12 +421,12 @@ public class ShowCommandParserTest {
     public void parse_allPrefixesInDifferentOrderIncludingTask_success() {
         Predicate<Employee> predicate =
                 new TaskContainsKeywordsPredicate(Arrays.asList("report"))
-                        .and(new EmailContainsKeywordsPredicate(Arrays.asList("gmail")))
+                        .and(new EmailContainsKeywordsPredicate(Arrays.asList("alice@gmail.com")))
                         .and(new NameContainsKeywordsPredicate(Arrays.asList("Alice")))
                         .and(new TagContainsKeywordsPredicate(Arrays.asList("friend")));
         ShowCommand expectedCommand = new ShowCommand(predicate);
 
-        assertParseSuccess(parser, "task/report e/gmail n/Alice t/friend", expectedCommand);
+        assertParseSuccess(parser, "task/report e/alice@gmail.com n/Alice t/friend", expectedCommand);
     }
 
     @Test
