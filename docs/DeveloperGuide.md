@@ -187,7 +187,27 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Delete employee
+### Employee management
+
+ManageUp supports adding, editing, and deleting employees. All three operations are handled through the `Logic` and `Model` components and follow a consistent parse-then-execute pattern.
+
+#### Add employee
+
+The `add` command creates a new employee record with the required fields: name, phone, email, department, and position. Tags are optional.
+
+`add` is parsed by `AddCommandParser`, which tokenizes the input using the defined prefixes and validates that all mandatory prefixes are present before constructing an `AddCommand`.
+
+During execution:
+
+1. `LogicManager` asks `AddressBookParser` to parse the command.
+2. `AddressBookParser` creates `AddCommandParser`, which builds an `Employee` object from the parsed fields and wraps it in an `AddCommand`.
+3. `AddCommand` performs three duplicate checks against the model: by name (`Model#hasPerson`), by email (`Model#getEmployeeWithSameEmail`), and by phone (`Model#getEmployeeWithSamePhone`). If any check fails, a `CommandException` is thrown.
+4. `AddCommand` calls `Model#addPerson(employee)`.
+5. `ModelManager` delegates to `AddressBook#addPerson(employee)`, which adds the employee through `UniquePersonList`.
+6. `ModelManager` resets the filtered list to show all employees.
+7. A `CommandResult` is created and returned to `LogicManager`.
+
+#### Delete employee
 
 ManageUp supports three variants of the `delete` command:
 
@@ -375,7 +395,7 @@ This keeps the overall task mapping and the employee card in sync after all task
 * responsible for managing different teams of people
 * can type fast
 * prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* is reasonably comfortable using Terminal and CLI apps
 
 **Value proposition**: manage employees and tasks faster than a typical mouse/GUI driven app
 
@@ -777,17 +797,71 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+   1. Download the jar file and copy into an empty folder.
 
-   2. Open Terminal or Command Prompt, go to the folder where you saved the jar file (for example, by using `cd` to change folders), and run `java -jar ManageUp.jar`.<br>
+   2. Open Terminal or Command Prompt, navigate to the folder containing the jar file using `cd`, and run `java -jar ManageUp.jar`.<br>
       Expected: Shows the GUI with a set of sample employees. The window size may not be optimum.
 
 2. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   2. Re-launch the app by typing `java -jar ManageUp.jar` in command prompt in the folder with the jar file again.<br>
-       Expected: The most recent window size and location is retained.
+   2. Re-launch the app by running `java -jar ManageUp.jar` again.<br>
+      Expected: The most recent window size and location is retained.
+
+### Adding an employee
+
+1. Adding an employee to the list
+
+   1. Prerequisites: The employee list is visible. The name, phone number, and email address used must not already exist in the list.
+
+   2. Test case: `add n/John Doe p/98765432 e/johnd@example.com d/Engineering pos/Software Engineer`<br>
+      Expected: A new employee named John Doe is added to the end of the list. The success message with the new employee's details is shown in the status message.
+
+   3. Test case: `add n/John Doe p/98765432 e/johnd@example.com d/Engineering pos/Software Engineer t/intern`<br>
+      Expected: Same as above, but the employee card also shows the `intern` tag.
+
+   4. Test case: `add n/John Doe p/98765432 e/johnd@example.com d/Engineering pos/Software Engineer` (where an employee named John Doe already exists)<br>
+      Expected: No employee is added. Error message indicating a duplicate employee is shown in the status message.
+
+   5. Test case: `add n/Jane Doe p/98765432 e/jane@example.com d/HR pos/Manager` (where `98765432` already belongs to another employee)<br>
+      Expected: No employee is added. Error message indicating a duplicate phone number is shown in the status message.
+
+   6. Test case: `add n/Jane Doe p/87654321 e/johnd@example.com d/HR pos/Manager` (where `johnd@example.com` already belongs to another employee)<br>
+      Expected: No employee is added. Error message indicating a duplicate email is shown in the status message.
+
+   7. Test case: `add n/John Doe p/98765432 e/johnd@example.com d/Engineering` (missing `pos/` prefix)<br>
+      Expected: No employee is added. Error message showing the correct command format is displayed.
+
+   8. Other incorrect add commands to try: `add`, `add n/John`, `add n/ p/98765432 e/johnd@example.com d/Engineering pos/Developer` (blank name)<br>
+      Expected: Similar to previous.
+
+### Adding a task
+
+1. Adding a task to an employee
+
+   1. Prerequisites: List all employees using the `list` command. At least one employee in the list.
+
+   2. Test case: `addtask 1 task/Prepare Report desc/Submit the Q3 report by Friday`<br>
+      Expected: A task named "Prepare Report" with description "Submit the Q3 report by Friday" is added to the first employee's card. The success message with the task details is shown in the status message. A task index (e.g. `#1`) is displayed beside the task on the employee card.
+
+   3. Test case: `addtask 1 task/Prepare Report desc/Submit the Q3 report by Friday` (same task again, on the same employee)<br>
+      Expected: No task is added. Error message indicating a duplicate task is shown in the status message.
+
+   4. Test case: `addtask 0 task/Prepare Report desc/Submit by Friday`<br>
+      Expected: No task is added. Error message indicating an invalid employee index is shown in the status message.
+
+   5. Test case: `addtask 999 task/Prepare Report desc/Submit by Friday` (where 999 is larger than the list size)<br>
+      Expected: No task is added. Error message indicating an invalid employee index is shown in the status message.
+
+   6. Test case: `addtask 1 task/Prepare Report` (missing `desc/` prefix)<br>
+      Expected: No task is added. Error message showing the correct command format is displayed.
+
+   7. Test case: `addtask 1 task/ desc/Some description` (blank task name)<br>
+      Expected: No task is added. Error message indicating invalid task name is shown.
+
+   8. Other incorrect addtask commands to try: `addtask`, `addtask 1`, `addtask abc task/Name desc/Desc`<br>
+      Expected: Similar to previous.
 
 ### Deleting an employee
 
