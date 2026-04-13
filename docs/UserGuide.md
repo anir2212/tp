@@ -742,51 +742,114 @@ Facing errors? See [Troubleshooting `edittask`](#troubleshooting-edittask).
 <a id="deleting-a-task"></a>
 ### Deleting a task : `deletetask`
 
-Deletes one or more tasks using their displayed task indices.
+Deletes one or more tasks identified by their absolute task indices.
 
-Format: `deletetask INDEX [MORE_INDICES]...`
+Format:
+```text
+deletetask INDEX [MORE_INDICES]...
+```
 
-* `INDEX` refers to the task index shown beside the task on the employee card, for example `#1`.
-* Each index **must be a positive integer** 1, 2, 3, …​
-* You can provide multiple task indices in one command to batch delete tasks.
-* When multiple task indices are provided, every task index must be valid before any task is deleted.
-* Duplicate task indices in the same command are not allowed.
-* `deletetask` removes the task from both the employee's personal task list and the overall task list used internally by ManageUp.
-* If an invalid task index is provided, ManageUp will reject the command and no task will be deleted.
-* `deletetask` provides a warning message to the user with the specified format to remind users of the correct format if the command is invalid.
+* `INDEX` refers to the absolute task index assigned to the task.
+* At least one task index must be provided.
+* Duplicate task indices are not allowed.
 
-Examples:
-* `deletetask 1` deletes the task with task index `1`.
+<box type="info" seamless>
 
+**Parameter constraints for this command:**
+
+| Parameter | Constraints |
+|-----------|-------------|
+| `INDEX` | Positive integer referring to an existing absolute task index |
+| `MORE_INDICES` | Additional positive integers referring to existing absolute task indices |
+
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** `deletetask` uses the task's absolute task index, not the employee index.
+
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** `deletetask` does not depend on the currently displayed employee list. Even after applying a filter with `show`, a task can still be deleted if its absolute task index is known.
+
+</box>
+
+#### Examples
+
+* `deletetask 1` – deletes the task with absolute task index `1`.
+* `deletetask 2 4` – deletes the tasks with absolute task indices `2` and `4` in a single command, even if those tasks are not currently visible in a filtered employee list.
+
+After a successful `deletetask` command, ManageUp confirms the deleted task details in the result box.
+
+<box type="info" seamless>
+
+**Expected output:**
 ![Delete task success](images/DeleteTask.png)
 
-* `deletetask 2 4` deletes the tasks with task indices `2` and `4`.
+</box>
 
+After a successful batch `deletetask` command, ManageUp lists all deleted task details in the result box.
+
+<box type="info" seamless>
+
+**Expected output for batch deletion:**
 ![Batch delete task success](images/BatchDeleteTask.png)
 
-* `deletetask 0` is not valid because task indices must start from `1`.
+</box>
 
 <a id="clearing-all-tasks-for-an-employee"></a>
 ### Clearing all tasks for an employee : `cleartasks`
 
-Clears every task assigned to one employee.
+Deletes all tasks belonging to one employee identified by employee index or employee name.
 
-Format: `cleartasks INDEX` or `cleartasks n/EMPLOYEE_NAME`
+Format:
+```text
+cleartasks INDEX
+cleartasks n/NAME
+```
 
 * `INDEX` refers to the employee index shown in the currently displayed employee list.
-* `n/EMPLOYEE_NAME` clears tasks for the uniquely matching employee name in the currently displayed employee list.
-* `cleartasks` removes all tasks from both the employee's personal task list and the overall task list used internally by ManageUp.
-* If the employee index is invalid, no tasks will be cleared.
-* If the provided employee name does not match any displayed employee, the command will fail.
-* If more than one displayed employee has the same name, the command will fail and you should use `cleartasks INDEX` instead.
+* `n/NAME` refers to one uniquely matching employee in the currently displayed employee list.
+* Exactly one target employee must be identified.
 
-Examples:
-* `cleartasks 1` clears all tasks assigned to the 1st displayed employee.
-* `cleartasks n/John Doe` clears all tasks assigned to employee `John Doe`.
+<box type="info" seamless>
 
+**Parameter constraints for this command:**
+
+| Parameter | Constraints |
+|-----------|-------------|
+| `INDEX` | Positive integer from the **currently displayed** employee list |
+| `NAME` | Must match exactly one employee in the **currently displayed** list |
+
+</box>
+
+<box type="warning" seamless>
+
+**Warning:** If more than one displayed employee has the same name, `cleartasks n/NAME` will fail. In that case, use `cleartasks INDEX` instead.
+
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** `cleartasks` uses the index from the **currently displayed list**. If you have filtered the list with `show`, use the indexes shown in the filtered list.
+
+</box>
+
+#### Examples
+
+* `cleartasks 1` – deletes all tasks assigned to the 1st displayed employee.
+* `cleartasks n/John Doe` – deletes all tasks assigned to employee `John Doe`.
+
+After a successful `cleartasks` command, ManageUp confirms all deleted task details for that employee.
+
+<box type="info" seamless>
+
+**Expected output:**
 ![Clear tasks success](images/ClearTask.png)
 
-* `cleartasks 0` is not valid because employee indices must start from `1`.
+</box>
 
 <a id="clearing-all-entries"></a>
 ### Clearing all entries : `clear`
@@ -849,8 +912,8 @@ _More features coming soon ..._
 | Show filtered employees from contacts | **Show**        | `show [n/NAME] [d/DEPARTMENT] [p/PHONE] [e/EMAIL] [pos/POSITION] [t/TAG] [task/TASK]...` <br> e.g., `show n/Ja d/Finance pos/Developer HR Management t/Nightshift` |
 | Delete ALL employees from contacts    | **Clear**       | `clear`                                                                                                                                                            |
 | Add tasks to an employee              | **Add Task**    | `addtask EMPLOYEE_INDEX task/TASK_NAME desc/TASK_DESCRIPTION`<br> e.g., `addtask 1 task/Prepare Slides desc/Send by Friday`                                        |
-| Edit a task                           | **Edit Task**   | `edittask TASK_INDEX [task/TASK_NAME] [desc/TASK_DESCRIPTION]`<br> e.g., `edittask 6 task/Close deal desc/Finalise by Wednesday`                                    |
-| Delete a task                         | **Delete Task** | `deletetask TASK_INDEX`<br> e.g., `deletetask 1`                                                                                                                   |
+| Edit a task                           | **Edit Task**   | `edittask TASK_INDEX [task/TASK_NAME] [desc/TASK_DESCRIPTION]`<br> e.g., `edittask 6 task/Close deal desc/Finalise by Wednesday`                                   |
+| Delete a task                         | **Delete Task** | `deletetask TASK_INDEX [MORE_TASK_INDEXES]...`<br> e.g., `deletetask 1`, `deletetask 1 3`                                                                          |
 | Clear all tasks for one employee      | **Clear Tasks** | `cleartasks INDEX` or `cleartasks n/EMPLOYEE_NAME`<br> e.g., `cleartasks 1`, `cleartasks n/James Ho`                                                               |
 | Display help message                  | **Help**        | `help`                                                                                                                                                             |
 
