@@ -49,7 +49,7 @@ New to ManageUp? Start with [Quick Start](#quick-start). Already installed? Jump
     * [Editing an employee: `edit`](#editing-an-employee)
     * [Deleting an employee: `delete`](#deleting-an-employee)
   * Task management
-    * [Adding a task to an employee: `addtask`](#adding-a-task-to-an-employee)
+    * [Adding a task: `addtask`](#adding-a-task-to-an-employee)
     * [Editing a task: `edittask`](#editing-a-task)
     * [Deleting a task: `deletetask`](#deleting-a-task)
     * [Clearing all tasks for an employee: `cleartasks`](#clearing-all-tasks-for-an-employee)
@@ -635,40 +635,57 @@ For example, entering `delete john doe` fails because multiple displayed employe
   Deletes the employee named `John Doe` if exactly one displayed employee matches that name.
 
 <a id="adding-a-task-to-an-employee"></a>
-### Adding a task to an employee : `addtask`
+### Adding a task: `addtask`
 
-Adds a task to a specific employee.
+Adds a task to a specific employee identified by employee index.
 
-Format: `addtask EMPLOYEE_INDEX task/TASK_NAME desc/TASK_DESCRIPTION`
+Format: 
+```
+addtask EMPLOYEE_INDEX task/TASK_NAME desc/TASK_DESCRIPTION
+```
 
 * `EMPLOYEE_INDEX` refers to the employee index shown in the currently displayed employee list.
 * The task will be added to that employee's personal task list and shown on the employee card.
 * The task will have an index number attached to it, to indicate task number.
-* A task name between 1 and 40 characters and a task description between 1 and 120 characters must be provided.
 * Only 1 `task/` and 1 `desc/` are allowed in the command. Duplicate prefixes are not allowed.
+* Both `task/` and `desc/` must be provided.
 * The format and order of `task/` and `desc/` should be followed exactly as stated in the format and no field should be left out.
-* `addtask` provides a warning message to the user with the specified format to remind users of the correct format if the command is invalid.
-* `addtask 1 task/Prepare Report` is not valid because the description field is missing.
 
-Examples:
+<box type="info" seamless>
+
+**Note:** This task index number does not follow a sequence and is merely a way to identify the task on the employee card. For example, if an employee has 2 tasks, and you delete the first one, the second task will still have the index `#2` on the employee card. If you add another task after that, it will be indexed as `#3` on the employee card.
+
+</box>
+
+
+<box type="info" seamless>
+
+**Parameter constraints for this command:**
+
+| Parameter          | Length                                                | Allowed Characters                                        |
+|--------------------|-------------------------------------------------------|-----------------------------------------------------------|
+| `EMPLOYEE_INDEX`   | – | Positive integer that exists in the current employee list |
+| `TASK_NAME`        | 1–40 characters                                       | Any characters                                            |
+| `TASK_DESCRIPTION` | 1–120 characters                                      | Any characters                                            |
+
+</box>
+
+
+#### Examples
 * `addtask 2 task/Prepare Report desc/Submit by Friday` 
    adds a task named `Prepare Report` with description `Submit by Friday` to employee at index 2.
 * `addtask 2 task/Client Followup desc/Call client before Monday` 
    adds a task named `Client Followup` with description `Call client before Monday` to employee at index 2.
 
-  ![addTask message](images/addtaskmessage.png)
-* `addtask`
-   shows the warning message with the correct format for `addtask` because the command is invalid.
-  ![addTaskHelp message](images/addtaskhelp.png)
-* `addtask 1 task/TASK_NAME_MORE_THAN_40_CHARACTERS desc/Submit by Friday`
-   shows the warning message because the task name exceeds the character limit.
-  ![addTaskNameTooLong message](images/addtasknametoolong.png)
-* `addtask 1 task/Prepare Report desc/TASK_DESCRIPTION_MORE_THAN_120_CHARACTERS`
-   shows the warning message because the task description exceeds the character limit.
-  ![addTaskDescTooLong message](images/addtaskdesctoolong.png)
-* `addtask INVLAID_EMPLOYEE_INDEX task/Prepare Report desc/Submit by Friday`
-   shows the warning message because the employee index is invalid.
-  ![addTaskInvalidEmployeeIndex message](images/addtaskinvalidemployeeindex.png)
+<box type="info" seamless>
+
+**Expected output:**
+![addTask message](images/addtaskmessage.png)
+
+</box>
+
+#### Errors
+Facing errors? See [Troubleshooting `addtask`](#troubleshooting-addtask).
 
 <a id="editing-a-task"></a>
 ### Editing a task: `edittask`
@@ -926,12 +943,12 @@ Use this section when `delete` fails.
 
 Use this section when `addtask` fails.
 
-| Scenario | Message shown | How to fix |
-|----------|---------------|------------|
-| Missing fields or wrong syntax | `Invalid task command format. Please use the following format: ...` | Use the format: `addtask EMPLOYEE_INDEX task/TASK_NAME desc/TASK_DESCRIPTION` |
-| Task name is blank or too long | `Task name should not be empty and should be between 1 and 40 characters.` | Re-enter a task name between 1 and 40 characters long |
-| Task description is blank or too long | `Task description should not be empty and should be between 1 and 120 characters.` | Re-enter a task description between 1 and 120 characters long |
-| Employee index is out of range | `Invalid employee index. Please enter an index shown in the current employee list.` | Run `list` and use a valid employee index |
+| Scenario                                                             | Message shown | How to fix |
+|----------------------------------------------------------------------|---------------|------------|
+| Missing fields, duplicate fields or wrong syntax                     | `Invalid task command format. Please use the following format: ...` | Use the format: `addtask EMPLOYEE_INDEX task/TASK_NAME desc/TASK_DESCRIPTION` |
+| Task name is blank or too long                                       | `Task name should not be empty and should be between 1 and 40 characters.` | Re-enter a task name between 1 and 40 characters long |
+| Task description is blank or too long                                | `Task description should not be empty and should be between 1 and 120 characters.` | Re-enter a task description between 1 and 120 characters long |
+| Employee index is out of range                                       | `Invalid employee index. Please enter an index shown in the current employee list.` | Run `list` and use a valid employee index |
 | Task with same name and description already exists for this employee | `This employee already has a task with the same name and same description.` | Change the task name or description |
 
 <div style="height: 20px;"></div>
