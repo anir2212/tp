@@ -928,10 +928,10 @@ Use this section when `edit` fails.
 
 Use this section when `show` fails.
 
-| Scenario | Message shown | How to fix |
-|----------|---------------|------------|
-| No filters provided | `Invalid command format. Please use the following format: ...` | Use the format: `show [n/NAME] [d/DEPARTMENT] [p/PHONE] [e/EMAIL] [pos/POSITION] [t/TAG] [task/TASK]...` — include at least one prefix filter |
-| A prefix is provided but its value is blank | `[Field] field should not be empty.` (e.g. `Name field should not be empty.`) | Add a keyword after the prefix, e.g. `show n/John` instead of `show n/` |
+| Scenario | Message shown | How to fix                                                                                                                                                      |
+|----------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| No filters provided | `Invalid command format. Please use the following format: ...` | Use the format: `show [n/NAME...] [d/DEPARTMENT...] [p/PHONE...] [e/EMAIL...] [pos/POSITION...] [t/TAG...] [task/TASK...]` — include at least one prefix filter |
+| A prefix is provided but its value is blank | `[Field] field should not be empty.` (e.g. `Name field should not be empty.`) | Add a keyword after the prefix, e.g. `show n/John` instead of `show n/`                                                                                         |
 
 <div style="height: 20px;"></div>
 
