@@ -568,4 +568,26 @@ public class ShowCommandParserTest {
 
         assertParseSuccess(parser, "   n/Alice    d/IT   ", expectedCommand);
     }
+
+    @Test
+    public void parse_duplicateNamePrefix_failure() {
+        assertParseFailure(parser, "n/Alice n/Bob",
+                "Multiple values were provided for these fields, "
+                        + "but each field accepts only one value: n/");
+    }
+
+    @Test
+    public void parse_duplicateTaskPrefix_failure() {
+        assertParseFailure(parser, "task/report task/review",
+                "Multiple values were provided for these fields, "
+                        + "but each field accepts only one value: task/");
+    }
+
+    @Test
+    public void parse_multipleDuplicatePrefixes_failure() {
+        assertParseFailure(parser, "n/Alice n/Bob d/IT d/HR",
+                "Multiple values were provided for these fields, "
+                        + "but each field accepts only one value: n/ d/");
+    }
+
 }
