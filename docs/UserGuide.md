@@ -5,7 +5,7 @@
 
 # ManageUp User Guide
 
-Sick of spreadsheets, scattered documents and switching between multiple tools? 
+Sick of spreadsheets, scattered documents and switching between multiple tools?
 
 ManageUp is an **employee and task management application** designed for **managers overseeing multiple teams or departments**. It is
 optimised for use via a **Command Line Interface (CLI)**, while still providing the benefits of a
@@ -92,7 +92,7 @@ New to ManageUp? Start with [Quick Start](#quick-start). Already installed? Jump
    | **Mac**           | Install the **exact JDK version** prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html). |
    | **Linux**         | Follow the installation guide [here](https://se-education.org/guides/tutorials/javaInstallationLinux.html)               |
 
-2. Download the latest `ManageUp.jar` from the ManageUp Github [releases page](https://github.com/AY2526S2-CS2103T-T14-1/tp/releases). 
+2. Download the latest `ManageUp.jar` from the ManageUp Github [releases page](https://github.com/AY2526S2-CS2103T-T14-1/tp/releases).
 
 3. Save the file to the folder you want to use as the _home folder_ for ManageUp.
 
@@ -107,9 +107,9 @@ New to ManageUp? Start with [Quick Start](#quick-start). Already installed? Jump
 
    Replace `Downloads` with the name of your chosen folder if different.
 
-5. ManageUp opens with sample data, as shown below. 
+5. ManageUp opens with sample data, as shown below.
 
-   ![Ui](images/Ui.png)
+   ![Ui](images/QuickStart_ManageUpOpenScene.png)
 
 6. Type commands in the command box at the top and press **Enter** to execute them. Some commands to try:
 
@@ -138,7 +138,7 @@ New to ManageUp? Start with [Quick Start](#quick-start). Already installed? Jump
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
-* All commands and parameters are case-sensitive. For example, `add` is a valid command but `ADD` is not. Similarly, `n/NAME` is valid but `N/NAME` is not.
+* Command words and prefixes are case-sensitive. For example, `add` is valid but `ADD` is not. Similarly, `n/` is valid but `N/` is not. Values entered for fields are stored as typed unless stated otherwise.
 
 * Parameters can be in any order unless specified.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -234,7 +234,7 @@ After entering a valid `add` command, ManageUp confirms the new employee was add
 <box type="info" seamless>
 
 **Expected output:**
-![Add employee success](images/AddEmployee_Successful.png)
+![Add employee success](images/Add_ExpectedOutput.png)
 
 </box>
 
@@ -257,6 +257,13 @@ list
 #### Examples
 
 * `list` – shows the full employee list.
+
+<box type="info" seamless>
+
+**Expected output:**
+![List expected output](images/List_ExpectedOutput.png)
+
+</box>
 
 <a id="editing-an-employee"></a>
 ### Editing an employee: `edit`
@@ -302,7 +309,7 @@ edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [d/DEPARTMENT] [pos/POSITION] [t/TAG]...
 
 <box type="warning" seamless>
 
-**Warning:** Editing an employee to have the same name and the same phone number or email address as an existing employee is not allowed and will be rejected. 
+**Warning:** Editing an employee to have the same name and the same phone number or email address as an existing employee is not allowed and will be rejected.
 
 </box>
 
@@ -342,7 +349,7 @@ After a successful `edit` command, ManageUp confirms the update and shows the **
 <box type="info" seamless>
 
 **Expected output:**
-![Edit employee success](images/EditEmployee_Successful.png)
+![Edit employee success](images/Edit_ExpectedOutput.png)
 
 </box>
 
@@ -361,6 +368,7 @@ delete INDEX [MORE_INDEXES]...
 ```
 
 * `NAME` must match exactly one employee in the currently displayed employee list.
+* `NAME` matching is case-insensitive.
 * `INDEX` refers to the employee index shown in the currently displayed employee list.
 * `MORE_INDEXES` refers to additional employee indexes from the currently displayed employee list.
 * Every provided index must be valid before ManageUp deletes any employee.
@@ -409,7 +417,7 @@ After a successful `delete NAME` command, ManageUp confirms the deleted employee
 <box type="info" seamless>
 
 **Expected output (`delete NAME`):**
-![Deleting an employee by name successfully](images/DeleteEmployee_ByName_Successful.png)
+![Deleting an employee by name successfully](images/Delete_ExpectedOutput_DeleteName.png)
 
 </box>
 
@@ -418,7 +426,7 @@ After a successful `delete INDEX` command, ManageUp confirms the deleted employe
 <box type="info" seamless>
 
 **Expected output (`delete INDEX`):**
-![Deleting an employee by index successfully](images/DeleteEmployee_ByIndex_Successful.png)
+![Deleting an employee by index successfully](images/Delete_ExpectedOutput_DeleteIndex.png)
 
 </box>
 
@@ -427,7 +435,7 @@ After a successful batch `delete` command, ManageUp lists all deleted employees 
 <box type="info" seamless>
 
 **Expected output (`delete INDEX [MORE_INDEXES]...`):**
-![Batch deleting employees by index successfully](images/DeleteEmployee_BatchDeleteByIndex_Successful.png)
+![Batch deleting employees by index successfully](images/Delete_ExpectedOutput_BatchDelete.png)
 
 </box>
 
@@ -439,7 +447,7 @@ Facing errors? See [Troubleshooting `delete`](#troubleshooting-delete).
 
 Adds a task to a specific employee identified by employee index.
 
-Format: 
+Format:
 ```
 addtask EMPLOYEE_INDEX task/TASK_NAME desc/TASK_DESCRIPTION
 ```
@@ -478,15 +486,15 @@ addtask EMPLOYEE_INDEX task/TASK_NAME desc/TASK_DESCRIPTION
 
 
 #### Examples
-* `addtask 2 task/Prepare Report desc/Submit by Friday` 
+* `addtask 2 task/Prepare Report desc/Submit by Friday`
    adds a task named `Prepare Report` with description `Submit by Friday` to employee at index 2.
-* `addtask 2 task/Client Followup desc/Call client before Monday` 
+* `addtask 2 task/Client Followup desc/Call client before Monday`
    adds a task named `Client Followup` with description `Call client before Monday` to employee at index 2.
 
 <box type="info" seamless>
 
 **Expected output:**
-![addTask message](images/addtaskmessage.png)
+![addTask message](images/AddTask_ExpectedOutput.png)
 
 </box>
 
@@ -538,7 +546,7 @@ After entering a valid `edittask` command, ManageUp confirms the update and show
 <box type="info" seamless>
 
 **Expected output:**
-![Edit task success](images/EditTask_Successful.png)
+![Edit task success](images/EditTask_ExpectedOutput.png)
 
 </box>
 
@@ -548,16 +556,16 @@ Facing errors? See [Troubleshooting `edittask`](#troubleshooting-edittask).
 <a id="deleting-a-task"></a>
 ### Deleting a task : `deletetask`
 
-Deletes one or more tasks identified by their absolute task indices.
+Deletes one or more tasks identified by their absolute task indexes.
 
 Format:
 ```text
-deletetask INDEX [MORE_INDICES]...
+deletetask TASK_INDEX [MORE_TASK_INDEXES]...
 ```
 
-* `INDEX` refers to the absolute task index assigned to the task.
+* `TASK_INDEX` refers to the absolute task index assigned to the task.
 * At least one task index must be provided.
-* Duplicate task indices are not allowed.
+* Duplicate task indexes are not allowed.
 
 <box type="info" seamless>
 
@@ -565,8 +573,8 @@ deletetask INDEX [MORE_INDICES]...
 
 | Parameter | Length | Allowed Characters |
 |-----------|------|--------------------|
-| `INDEX` | – | Positive integer referring to an existing absolute task index |
-| `MORE_INDICES` | – | Additional positive integers referring to existing absolute task indices |
+| `TASK_INDEX` | – | Positive integer referring to an existing absolute task index |
+| `MORE_TASK_INDEXES` | – | Additional positive integers referring to existing absolute task indexes |
 
 </box>
 
@@ -585,14 +593,14 @@ deletetask INDEX [MORE_INDICES]...
 #### Examples
 
 * `deletetask 1` – deletes the task with absolute task index `1`.
-* `deletetask 2 4` – deletes the tasks with absolute task indices `2` and `4` in a single command, even if those tasks are not currently visible in a filtered employee list.
+* `deletetask 2 4` – deletes the tasks with absolute task indexes `2` and `4` in a single command, even if those tasks are not currently visible in a filtered employee list.
 
 After a successful `deletetask` command, ManageUp confirms the deleted task details in the result box.
 
 <box type="info" seamless>
 
-**Expected output (`deletetask INDEX`):**
-![Delete task success](images/DeleteTask.png)
+**Expected output (`deletetask TASK_INDEX`):**
+![Delete task success](images/DeleteTask_ExpectedOutput_DeleteIndex.png)
 
 </box>
 
@@ -600,8 +608,8 @@ After a successful batch `deletetask` command, ManageUp lists all deleted task d
 
 <box type="info" seamless>
 
-**Expected output (`deletetask INDEX [MORE_INDICES]...`):**
-![Batch delete task success](images/BatchDeleteTask.png)
+**Expected output (`deletetask TASK_INDEX [MORE_TASK_INDEXES]...`):**
+![Batch delete task success](images/DeleteTask_ExpectedOutput_BatchDelete.png)
 
 </box>
 
@@ -621,6 +629,7 @@ cleartasks n/NAME
 
 * `INDEX` refers to the employee index shown in the currently displayed employee list.
 * `n/NAME` refers to one uniquely matching employee in the currently displayed employee list.
+* `n/NAME` matching is case-insensitive.
 * Exactly one target employee must be identified.
 
 <box type="info" seamless>
@@ -656,7 +665,7 @@ After a successful `cleartasks` command, ManageUp confirms all deleted task deta
 <box type="info" seamless>
 
 **Expected output:**
-![Clear tasks success](images/ClearTask.png)
+![Clear tasks success](images/ClearTasks_ExpectedOutput.png)
 
 </box>
 
@@ -686,7 +695,7 @@ help
 <box type="info" seamless>
 
 **Expected output:**
-![Help Window](images/Help_PopOutWindow.png)
+![Help Window](images/Help_ExpectedOutput.png)
 
 </box>
 
@@ -723,6 +732,13 @@ show [n/NAME_KEYWORD...] [d/DEPARTMENT_KEYWORD...] [p/PHONE_KEYWORD...] [e/EMAIL
 
 <box type="info" seamless>
 
+**Expected output:**
+![Show expected output](images/Show_ExpectedOutput.png)
+
+</box>
+
+<box type="info" seamless>
+
 **Note:** `task/` filters by **task title only**, not task description.
 
 </box>
@@ -752,20 +768,20 @@ Examples:
 
 **Keyword behaviour:**
 
-* Different prefixes are combined using **AND**.  
+* Different prefixes are combined using **AND**.
   For example, `show n/Alex d/IT` shows employees whose name contains `Alex` **and** whose department contains `IT`.
 
-* Multiple keywords after the same prefix are combined using **OR**.  
+* Multiple keywords after the same prefix are combined using **OR**.
   For example, `show n/John Alex` shows employees whose name contains `John` **or** `Alex`.
 
-* If both are used together, **OR** applies within a field, while **AND** applies across different fields.  
+* If both are used together, **OR** applies within a field, while **AND** applies across different fields.
   For example, `show n/John Alex d/IT` shows employees whose name contains `John` **or** `Alex`, **and** whose department contains `IT`.
 
 </box>
 
 <box type="tip" seamless>
 
-**Tip:** Since matching is based on substrings, shorter keywords are often enough.  
+**Tip:** Since matching is based on substrings, shorter keywords are often enough.
 For example, `d/Fin` may match `Finance`, and `pos/Engineer` may match `Software Engineer`.
 
 </box>
@@ -779,13 +795,6 @@ For example, `d/Fin` may match `Finance`, and `pos/Engineer` may match `Software
 * `show t/intern task/report` – shows employees with a tag containing `intern` and a task title containing `report`.
 
 After entering a valid `show` command, ManageUp updates the displayed employee list to show only the employees matching the given filters.
-
-<box type="info" seamless>
-
-**Expected output:**  
-The employee list is filtered according to the prefixes and keywords provided.
-
-</box>
 
 #### Errors
 Facing errors? See [Troubleshooting `show`](#troubleshooting-show).
@@ -808,12 +817,29 @@ clear
 
 * `clear` – removes all employees and their tasks from ManageUp.
 
+<box type="info" seamless>
+
+**Expected output:**
+![Clear expected output](images/Clear_ExpectedOutput.png)
+
+</box>
+
 <a id="exiting-the-program"></a>
 ### Exiting the program : `exit`
 
 Exits the program.
 
-Format: `exit`
+Format:
+```text
+exit
+```
+
+* No additional parameters are required.
+* `exit` closes ManageUp.
+
+#### Examples
+
+* `exit` – closes ManageUp.
 
 <a id="saving-the-data"></a>
 ### Saving the data
@@ -994,9 +1020,9 @@ Use this section when `deletetask` fails.
 
 | Scenario | Message shown | How to fix |
 |----------|---------------|------------|
-| No index provided or wrong syntax | `Invalid command format. Please use the following format: ...` | Use the format: `deletetask TASK_INDEX [MORE_INDICES]...` — provide at least one task index |
+| No index provided or wrong syntax | `Invalid command format. Please use the following format: ...` | Use the format: `deletetask TASK_INDEX [MORE_TASK_INDEXES]...` — provide at least one task index |
 | Index is 0 or negative | `Invalid task index. Please enter only positive task indices.` | Task indexes start from 1 — check the `#N` shown on the employee card |
-| Index does not match any existing task | `Invalid task index. Please enter task indices that are currently shown in ManageUp.` | Check the `#N` numbers on employee cards to find valid indexes |
+| Index does not match any existing task | `Invalid task index. Please enter task indices that are currently shown in ManageUp.` | Check the `#N` numbers on employee cards to find valid task indexes |
 | Same index given more than once | `Duplicate task indices are not allowed.` | Each task index may appear only once per command |
 
 <div style="height: 20px;"></div>
