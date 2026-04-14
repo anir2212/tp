@@ -568,4 +568,47 @@ public class ShowCommandParserTest {
 
         assertParseSuccess(parser, "   n/Alice    d/IT   ", expectedCommand);
     }
+
+    @Test
+    public void parse_duplicateNamePrefix_failure() {
+        assertParseFailure(parser, "n/Alice n/Bob",
+                "Multiple values were provided for these fields, "
+                        + "but each field accepts only one value: n/");
+    }
+
+    @Test
+    public void parse_duplicateTaskPrefix_failure() {
+        assertParseFailure(parser, "task/report task/review",
+                "Multiple values were provided for these fields, "
+                        + "but each field accepts only one value: task/");
+    }
+
+    @Test
+    public void parse_multipleDuplicatePrefixes_failure() {
+        assertParseFailure(parser, "n/Alice n/Bob d/IT d/HR",
+                "Multiple values were provided for these fields, "
+                        + "but each field accepts only one value: n/ d/");
+    }
+
+    @Test
+    public void parse_duplicateTagPrefix_failure() {
+        assertParseFailure(parser, "t/friend t/mentor",
+                "Multiple values were provided for these fields, "
+                        + "but each field accepts only one value: t/");
+    }
+
+    @Test
+    public void parse_duplicatePositionPrefix_failure() {
+        assertParseFailure(parser, "pos/Engineer pos/Manager",
+                "Multiple values were provided for these fields, "
+                        + "but each field accepts only one value: pos/");
+    }
+
+    @Test
+    public void parse_multipleDuplicatePrefixesIncludingTask_failure() {
+        assertParseFailure(parser, "p/9123 p/9999 task/report task/review",
+                "Multiple values were provided for these fields, "
+                        + "but each field accepts only one value: p/ task/");
+    }
+
 }

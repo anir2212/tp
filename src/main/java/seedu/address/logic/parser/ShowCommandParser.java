@@ -2,7 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.logic.commands.ShowCommand;
@@ -42,11 +44,13 @@ public class ShowCommandParser implements Parser<ShowCommand> {
             throw createInvalidShowCommandException();
         }
 
+        checkDuplicatePrefixes(input);
+
         Predicate<Employee> predicate = employee -> true;
         boolean hasFilter = false;
 
         // Name
-        if (input.contains("n/")) {
+        if (containsPrefix(input, "n/")) {
             String value = extract(input, "n/");
             if (value.isEmpty()) {
                 throw createEmptyFieldException("Name");
@@ -59,7 +63,7 @@ public class ShowCommandParser implements Parser<ShowCommand> {
         }
 
         // Department
-        if (input.contains("d/")) {
+        if (containsPrefix(input, "d/")) {
             String value = extract(input, "d/");
             if (value.isEmpty()) {
                 throw createEmptyFieldException("Department");
@@ -72,7 +76,7 @@ public class ShowCommandParser implements Parser<ShowCommand> {
         }
 
         // Phone
-        if (input.contains("p/")) {
+        if (containsPrefix(input, "p/")) {
             String value = extract(input, "p/");
             if (value.isEmpty()) {
                 throw createEmptyFieldException("Phone");
@@ -85,7 +89,7 @@ public class ShowCommandParser implements Parser<ShowCommand> {
         }
 
         // Position
-        if (input.contains("pos/")) {
+        if (containsPrefix(input, "pos/")) {
             String value = extract(input, "pos/");
             if (value.isEmpty()) {
                 throw createEmptyFieldException("Position");
@@ -98,7 +102,7 @@ public class ShowCommandParser implements Parser<ShowCommand> {
         }
 
         // Email
-        if (input.contains("e/")) {
+        if (containsPrefix(input, "e/")) {
             String value = extract(input, "e/");
             if (value.isEmpty()) {
                 throw createEmptyFieldException("Email");
@@ -110,7 +114,7 @@ public class ShowCommandParser implements Parser<ShowCommand> {
         }
 
         // Tag
-        if (input.contains("t/")) {
+        if (containsPrefix(input, "t/")) {
             String value = extract(input, "t/");
             if (value.isEmpty()) {
                 throw createEmptyFieldException("Tag");
@@ -122,7 +126,7 @@ public class ShowCommandParser implements Parser<ShowCommand> {
         }
 
         // Task
-        if (input.contains("task/")) {
+        if (containsPrefix(input, "task/")) {
             String value = extract(input, "task/");
             if (value.isEmpty()) {
                 throw createEmptyFieldException("Task");
@@ -140,6 +144,75 @@ public class ShowCommandParser implements Parser<ShowCommand> {
         }
 
         return new ShowCommand(predicate);
+    }
+
+    /**
+     * Checks whether the input contains duplicate prefixes.
+     */
+    private void checkDuplicatePrefixes(String input) throws ParseException {
+        assert input != null : "Input should not be null";
+
+        List<String> duplicatePrefixes = new ArrayList<>();
+
+        if (countPrefixOccurrences(input, "n/") > 1) {
+            duplicatePrefixes.add("n/");
+        }
+        if (countPrefixOccurrences(input, "d/") > 1) {
+            duplicatePrefixes.add("d/");
+        }
+        if (countPrefixOccurrences(input, "p/") > 1) {
+            duplicatePrefixes.add("p/");
+        }
+        if (countPrefixOccurrences(input, "e/") > 1) {
+            duplicatePrefixes.add("e/");
+        }
+        if (countPrefixOccurrences(input, "pos/") > 1) {
+            duplicatePrefixes.add("pos/");
+        }
+        if (countPrefixOccurrences(input, "t/") > 1) {
+            duplicatePrefixes.add("t/");
+        }
+        if (countPrefixOccurrences(input, "task/") > 1) {
+            duplicatePrefixes.add("task/");
+        }
+
+        if (!duplicatePrefixes.isEmpty()) {
+            throw createDuplicatePrefixException(duplicatePrefixes);
+        }
+    }
+
+    /**
+     * Returns true if the prefix appears as a recognised command prefix.
+     */
+    private boolean containsPrefix(String input, String prefix) {
+        assert input != null : "Input should not be null";
+        assert prefix != null : "Prefix should not be null";
+
+        return input.startsWith(prefix) || input.contains(" " + prefix);
+    }
+
+    /**
+     * Counts how many times a prefix appears as a recognised command prefix.
+     */
+    private int countPrefixOccurrences(String input, String prefix) {
+        assert input != null : "Input should not be null";
+        assert prefix != null : "Prefix should not be null";
+
+        int count = 0;
+
+        if (input.startsWith(prefix)) {
+            count++;
+        }
+
+        int fromIndex = 0;
+        String spacedPrefix = " " + prefix;
+
+        while ((fromIndex = input.indexOf(spacedPrefix, fromIndex)) != -1) {
+            count++;
+            fromIndex += spacedPrefix.length();
+        }
+
+        return count;
     }
 
     /**
@@ -232,5 +305,14 @@ public class ShowCommandParser implements Parser<ShowCommand> {
     private ParseException createEmptyFieldException(String fieldName) {
         return new ParseException(fieldName + " field should not be empty.\n"
                 + ShowCommand.MESSAGE_USAGE);
+    }
+
+    /**
+     * Creates the parse exception for duplicate prefixes.
+     */
+    private ParseException createDuplicatePrefixException(List<String> duplicatePrefixes) {
+        return new ParseException("Multiple values were provided for these fields, "
+                + "but each field accepts only one value: "
+                + String.join(" ", duplicatePrefixes));
     }
 }
